@@ -3,11 +3,13 @@ import { ThemeContext } from "../../../contexts/ThemeContext";
 import "./AddColumnTab.css";
 
 const AddColumnTab = ({ addColumn }: any) => {
-
-  const { theme } = useContext(ThemeContext)
+  const { theme } = useContext(ThemeContext);
   return (
     <div
-      className={"child w-[280px] min-h-[88px] flex justify-center items-center font-jakartaBold dark:bg-[rgba(43, 44, 55, 0.25)] text-2xl mt-11 cursor-pointer text-mediumGrey " + (theme === 'light' ? 'light-column-bg': 'dark-column-bg')}
+      className={
+        "child w-[280px] min-h-[88px] flex justify-center items-center font-jakartaBold dark:bg-[rgba(43, 44, 55, 0.25)] text-2xl mt-11 cursor-pointer text-mediumGrey " +
+        (theme === "light" ? "light-column-bg" : "dark-column-bg")
+      }
       onClick={addColumn}
     >
       <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg">

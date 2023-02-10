@@ -1,23 +1,28 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { ColumnsContext } from "../../../../contexts/ColumnsContext";
-import { ThemeContext } from "../../../../contexts/ThemeContext";
-import { AddTaskProps, IAddTask } from "../../../../types";
-import Button from "../../../Button/Button";
-import Subfield from "../../../Subfield/Subfield";
-import "./AddTask.css";
+import React, { useContext, useEffect, useState } from "react";
+import { ColumnsContext } from "../../../contexts/ColumnsContext";
+import { ThemeContext } from "../../../contexts/ThemeContext";
+import { IAddTask } from "../../../types";
+import Button from "../../Button/Button";
+import Subfield from "../../Subfield/Subfield";
 
-const AddTask = ({ handleCloseModal }: AddTaskProps) => {
-  let arr = [1];
+export type EditTaskProps = {
+  task: any;
+  handleCloseModal: () => void;
+};
 
+const EditTask = ({
+  task,
+  handleCloseModal,
+}: EditTaskProps) => {
+  useEffect(() => {
+    console.log(inputFields);
+
+  }, []);
   const [inputFields, setInputFields] = useState<IAddTask>({
-    title: "",
-    description: "",
-    subtasks: [
-      {
-        subtask: "",
-      },
-    ],
-    status: "todo",
+    title: task.title,
+    description: task.description,
+    subtasks: task.subtasks,
+    status: task.status,
   });
 
   const columnsList = useContext(ColumnsContext);
@@ -50,14 +55,14 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
 
   const AddSubtaskFields = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    let newField = { subtask: "" };
+    let newField = { title: "" };
     setInputFields({
       ...inputFields,
       subtasks: [...inputFields.subtasks, newField],
     });
   };
 
-  const createTask = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const editTask = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     console.log(inputFields);
     handleCloseModal();
@@ -68,7 +73,7 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
   return (
     <div className="px-7 py-5 bg-white w-[480px] h-[auto] rounded-[6px] dark:bg-darkGrey dark:text-white">
       <form>
-        <div className="font-jakartaBold">Add Task</div>
+        <div className="font-jakartaBold">Edit Task</div>
         <div className="mt-3 flex flex-col">
           <label
             htmlFor="title"
@@ -107,13 +112,14 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
           >
             Subtasks
           </label>
-          {inputFields.subtasks.map((item: any, index) => (
+          {inputFields.subtasks.map((item: any, index: number) => (
             <Subfield
               index={index}
-              input={item.subtask}
+              input={item.title}
               deleteSubfield={deleteSubtaskField}
               handleSubfieldChange={(e) => handleSubtaskChange(index, e)}
-              name="subtasks"
+              name="title"
+              key={index}
             />
           ))}
           <div className="h-[40px]">
@@ -121,7 +127,8 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
               onClick={(e) => AddSubtaskFields(e)}
               text="Add New Subtask"
               color="mainPurple"
-              primary={theme === "light" ? "[#635FC71A]" : "white"}
+              primary={theme === "light" ? "lightPurple" : "white"}
+              hoverColor={theme ==="light" ? "lightPurpleHover": "white"}
               icon={true}
             />
           </div>
@@ -134,7 +141,7 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
             Status
           </label>
           <select
-            className="w-full border-[mediumGrey] outline-none dark:bg-darkGrey dark:border-tintedMediumGrey dark:text-white font-jakartaSemiBold text-[14px] border-[1px] h-[40px] px-2"
+            className="w-full border-[mediumGrey] outline-none dark:bg-darkGrey dark:border-tintedMediumGrey dark:text-white font-jakartaSemi text-[14px] border-[1px] h-[40px] px-2"
             name="status"
             value={inputFields.status}
             onChange={(e) => handleFormChange(e)}
@@ -149,9 +156,9 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
 
         <div className="h-[40px] mt-5">
           <Button
-            text="Create Task"
+            text="Edit Task"
             icon={false}
-            onClick={(e) => createTask(e)}
+            onClick={(e) => editTask(e)}
             type="submit"
           />
         </div>
@@ -160,4 +167,4 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
   );
 };
 
-export default AddTask;
+export default EditTask;

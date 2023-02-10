@@ -15,9 +15,9 @@ label input:focus + span {
   box-shadow: 0 0 1px #a445ed;
 }
 
-input:checked + span {
+/* input:checked + span {
     background-color: #979797;
-}
+} */
 
 
 label input:checked + span:before {

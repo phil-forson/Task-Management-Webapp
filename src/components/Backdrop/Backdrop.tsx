@@ -1,19 +1,19 @@
-import { motion } from 'framer-motion'
-import { BackdropProps } from '../../types'
-import './Backdrop.css'
+import { motion } from "framer-motion";
+import { BackdropProps } from "../../types";
+import "./Backdrop.css";
 
-const Backdrop = ({ children, onClick}: BackdropProps) => {
+const Backdrop = ({ children, onClick }: BackdropProps) => {
   return (
     <motion.div
-    className='backdrop'
-    onClick={onClick}
-    initial={{opacity: 0}}
-    animate={{opacity: 1}}
-    exit={{opacity: 0}}
+      className="backdrop"
+      onClick={onClick}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
     >
-        {children}
+      {children}
     </motion.div>
-  )
-}
+  );
+};
 
-export default Backdrop
+export default Backdrop;

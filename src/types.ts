@@ -33,6 +33,7 @@ export type ButtonProps = {
   primary?: string
   icon?: boolean
   type?: "button" | "submit" | "reset" | undefined
+  hoverColor?: string
 };
 
 export type BoardtabProps = {
@@ -58,7 +59,8 @@ export type TaskItemProps = {
 
 export type TaskCardProps = {
   status: any
-  task: string;
+  task: {};
+  taskTitle: string;
   completed: number;
   totalNumOfSubtasks: number;
   description: string;

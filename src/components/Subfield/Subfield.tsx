@@ -1,7 +1,13 @@
-import React from "react";
 import { SubfieldProps } from "../../types";
 
-const Subfield = ({ index, input, deleteSubfield, handleSubfieldChange, placeholder, name }: SubfieldProps) => {
+const Subfield = ({
+  index,
+  input,
+  deleteSubfield,
+  handleSubfieldChange,
+  placeholder,
+  name,
+}: SubfieldProps) => {
   return (
     <div className="flex items-center justify-between mb-3">
       <input
@@ -9,7 +15,7 @@ const Subfield = ({ index, input, deleteSubfield, handleSubfieldChange, placehol
         placeholder={placeholder ? placeholder : "e.g. Take coffee break"}
         name={name}
         value={input}
-        onChange={e => handleSubfieldChange( e, index)}
+        onChange={(e) => handleSubfieldChange(e, index)}
       />
       <svg
         width="15"

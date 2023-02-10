@@ -5,8 +5,13 @@ import { ThemeContext } from "../../../contexts/ThemeContext";
 import Button from "../../Button/Button";
 import Subfield from "../../Subfield/Subfield";
 
-const EditBoard = ({ closeModal }: any) => {
-  const currentTab = useContext(BoardContext);
+export type EditBoardProps = {
+  closeModal: () => void;
+  currentTab: string
+}
+
+const EditBoard = ({ closeModal, currentTab }: EditBoardProps) => {
+
 
   const columnsList = useContext(ColumnsContext);
 
@@ -99,6 +104,7 @@ const EditBoard = ({ closeModal }: any) => {
             text="Add New Column"
             color="mainPurple"
             primary={theme === "light" ? "lightPurple" : "white"}
+            hoverColor={theme ==="light" ? "lightPurpleHover": "white"}
           />
         </div>
       </div>

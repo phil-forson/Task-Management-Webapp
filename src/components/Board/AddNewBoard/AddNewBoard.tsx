@@ -96,7 +96,8 @@ const AddNewBoard = ({ closeModal }: any) => {
             onClick={(e) => addSubfield(e)}
             text="Add New Column"
             color="mainPurple"
-            primary={theme === 'light' ? "[#635FC71A]": 'white'}
+            primary={theme === 'light' ? "lightPurple": 'white'}
+            hoverColor={theme ==="light" ? "lightPurpleHover": "white"}
           />
         </div>
       </div>

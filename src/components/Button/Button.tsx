@@ -3,19 +3,27 @@ import React from "react";
 import Add from "../../assets/icon-add-task-mobile.svg";
 import { ButtonProps } from "../../types";
 
-const Button = ({ text, onClick, color, primary, icon=true, type }: ButtonProps) => {
+const Button = ({
+  text,
+  onClick,
+  color,
+  primary,
+  icon = true,
+  type,
+  hoverColor,
+}: ButtonProps) => {
   return (
     <button
       className={
         "  rounded-[24px] w-full h-full outline-none border-none " +
         (color ? `text-${color} ` : "text-white ") +
-        (primary ? `bg-${primary} ` : "bg-mainPurple")
+        (primary ? `bg-${primary} ` : "bg-mainPurple ") +
+        (hoverColor ? `hover:bg-${hoverColor} ` : "hover:bg-mainPurpleHover ")
       }
       onClick={onClick}
       type={type}
     >
       <div className="flex mx-4 justify-center h-full items-center cursor-pointer">
-        {/* <img src={Add} className="w-2 h-2 mr-2 text-red-100" /> */}
         {icon && (
           <svg
             width="12"

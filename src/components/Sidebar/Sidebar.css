@@ -1,0 +1,10 @@
+/* .sidebar {
+    opacity: 0;
+    display: none;
+    transition: all 4000ms ease-out;
+}
+
+.sidebar.true {
+    opacity: 1;
+    display: block;
+} */

@@ -1,0 +1,5 @@
+.checkbox {
+    top: 50%;
+    left: 1.2rem;
+    transform: translate(-50%, -50%);
+}

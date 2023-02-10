@@ -1,0 +1,8 @@
+.light-column-bg {
+    background-image: linear-gradient(rgb(233,239,250), rgba(233,239,250,.5));
+    /* border: 1px solid #AFB6B9; */
+}
+
+.dark-column-bg {
+    background: linear-gradient(180deg, rgba(43, 44, 55, 0.25) 0%, rgba(43, 44, 55, 0.125) 100%);
+}

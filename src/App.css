@@ -1,0 +1,9 @@
+.gridContainer {
+  display: grid;
+  grid-auto-columns: auto auto;
+  grid-template-rows: 85px auto;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

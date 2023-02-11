@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import Board from "./components/Board/Board";
-import Modal from "./components/Modal/Modal";
 import Nav from "./components/Nav/Nav";
 import Sidebar from "./components/Sidebar/Sidebar";
 import { ColumnsContext } from "./contexts/ColumnsContext";

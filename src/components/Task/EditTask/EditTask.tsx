@@ -71,7 +71,7 @@ const EditTask = ({
   const { theme } = useContext(ThemeContext);
 
   return (
-    <div className="px-7 py-5 bg-white w-[480px] h-[auto] rounded-[6px] dark:bg-darkGrey dark:text-white">
+    <div className="px-7 py-5 bg-white tablet:w-[480px] mobile:w-[343px] h-[auto] rounded-[6px] dark:bg-darkGrey dark:text-white">
       <form>
         <div className="font-jakartaBold">Edit Task</div>
         <div className="mt-3 flex flex-col">
@@ -127,7 +127,7 @@ const EditTask = ({
               onClick={(e) => AddSubtaskFields(e)}
               text="Add New Subtask"
               color="mainPurple"
-              primary={theme === "light" ? "lightPurple" : "white"}
+              primary={theme === "light" ? "#635FC71A" : 'white'}
               hoverColor={theme ==="light" ? "lightPurpleHover": "white"}
               icon={true}
             />

@@ -2,3 +2,10 @@
     grid-row: 1;
     grid-column: auto;
 }
+
+.title-error {
+    top: 50%;
+    /* left: 1.2rem; */
+    right: -30px;
+    transform: translate(-50%, -50%);
+}

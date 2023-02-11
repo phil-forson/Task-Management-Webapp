@@ -8,7 +8,7 @@ const Checkbox = ({ element, checked, onChange, index }: CheckboxProps) => {
       <label
         htmlFor={element}
         className={
-          "bg-lightGrey dark:bg-veryDarkGrey flex h-auto w-full pl-9 font-jakartaBold items-center text-[13px] py-3 cursor-pointer hover:bg-mainPurple dark:hover:bg-lightPurple " +
+          "bg-lightGrey dark:bg-veryDarkGrey flex h-auto w-full pl-9 font-jakartaBold items-center tablet:text-[13px] mobile:text-[12px] py-3 cursor-pointer hover:bg-lightPurple dark:hover:bg-lightPurple " +
           (checked
             ? "line-through text-mediumGrey"
             : "text-black dark:text-white")

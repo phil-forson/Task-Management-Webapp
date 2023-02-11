@@ -12,7 +12,16 @@ function App() {
   const [showSidebar, setShowSidebar] = useState<boolean>(true);
   const [currentTab, setCurrentTab] = useState<string>("");
   const [columnList, setColumnList] = useState<Array<any>>([]);
-  const [theme, setTheme] = useState(localStorage.getItem('theme'));
+  const [theme, setTheme] = useState(localStorage.getItem("theme"));
+  const [boardModalOpen, setBoardModalOpen] = useState(false)
+
+  const openBoardModal = () => {
+    setBoardModalOpen(true);
+  };
+
+  const closeBoardModal = () => {
+    setBoardModalOpen(false);
+  };
 
   const findBoard = () => {
     const board = data.boards.find((board: any) => board.name == currentTab);
@@ -33,7 +42,6 @@ function App() {
     } else {
       setCurrentTab("No Boards Created");
     }
-
   }, []);
 
   useEffect(() => {
@@ -44,11 +52,10 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem("theme", theme || "light");
-    if(localStorage.getItem('theme') == 'dark'){
-      document.documentElement.classList.add('dark')
-    }
-    else {
-      document.documentElement.classList.remove('dark')
+    if (localStorage.getItem("theme") == "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
     }
   }, [theme]);
 
@@ -58,22 +65,33 @@ function App() {
     <ColumnsContext.Provider value={columnList}>
       <ThemeContext.Provider value={themeElements}>
         <div className=" dark:bg-darkGrey">
-          <Nav currentTab={currentTab} openModal={open} showSidebar={showSidebar} />
+          <Nav
+            currentTab={currentTab}
+            openModal={open}
+            showSidebar={showSidebar}
+            setCurrentTab={setCurrentTab}
+            data={data}
+            openBoardModal={openBoardModal}
+            closeBoardModal={closeBoardModal}
+          />
           <div className="flex">
-          {showSidebar && (
-            <Sidebar
+            {showSidebar && (
+              <Sidebar
+                setShowSidebar={setShowSidebar}
+                currentTab={currentTab}
+                setCurrentTab={setCurrentTab}
+                boardModalOpen={boardModalOpen}
+                openBoardModal={openBoardModal}
+                closeBoardModal={closeBoardModal}
+              />
+            )}
+            <Board
+              showSidebar={showSidebar}
               setShowSidebar={setShowSidebar}
               currentTab={currentTab}
-              setCurrentTab={setCurrentTab}
+              data={data}
+              columnsList={columnList}
             />
-          )}
-          <Board
-            showSidebar={showSidebar}
-            setShowSidebar={setShowSidebar}
-            currentTab={currentTab}
-            data={data}
-            columnsList={columnList}
-          />
           </div>
           {/* {modalOpen && <Modal handleClose={close} text="Hello world" />} */}
         </div>

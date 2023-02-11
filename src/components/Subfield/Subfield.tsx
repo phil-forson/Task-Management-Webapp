@@ -21,7 +21,7 @@ const Subfield = ({
         width="15"
         height="15"
         xmlns="http://www.w3.org/2000/svg"
-        className="cursor-pointer"
+        className="cursor-pointer ml-3"
         onClick={() => deleteSubfield(index)}
       >
         <g fill="#828FA3" fill-rule="evenodd">

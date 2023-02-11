@@ -11,19 +11,16 @@ const Sidebar = ({
   setShowSidebar,
   currentTab,
   setCurrentTab,
+  boardModalOpen,
+  openBoardModal,
+  closeBoardModal
 }: SidebarProps) => {
-  const [boardModalOpen, setBoardModalOpen] = useState(false);
+
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("theme") === "dark"
   );
 
-  const openBoardModal = () => {
-    setBoardModalOpen(true);
-  };
 
-  const closeBoardModal = () => {
-    setBoardModalOpen(false);
-  };
 
   const { setTheme } = useContext(ThemeContext);
 
@@ -37,11 +34,10 @@ const Sidebar = ({
   return (
     <>
       <div
-        className="relative w-[300px] min-w-[300px] h-[100vh] "
-        style={{ gridColumn: 1, gridRow: 2 }}
+        className="relative laptop:w-[300px] laptop:min-w-[300px] tablet:min-w-[261px] tablet:max-w-[261px] h-[100vh] mobile:hidden tablet:block "
       >
         <div
-          className="max-w-[300px] min-w-[300px] fixed left-0 top-[85px] border-r-[1px] border-lightGrey dark:border-darkLines h-[100vh] dark:bg-darkGrey text-mediumGrey z-10 bg-white"
+          className="laptop:max-w-[300px] laptop:min-w-[300px] tablet:max-w-[261px] tablet:min-w-[261px] fixed left-0 top-[85px] border-r-[1px] border-lightGrey dark:border-darkLines h-[100vh] dark:bg-darkGrey text-mediumGrey z-10 bg-white"
           style={{ gridColumn: 1 }}
         >
           <div className="mr-5 pt-3">

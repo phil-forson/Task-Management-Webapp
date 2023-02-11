@@ -15,10 +15,10 @@ module.exports = {
       colors: {
         mainPurple: "#635FC7",
         lightPurple: "#635FC71A",
-        mainPurpleHover: '#A8A4FF',
-        lightPurpleHover: 'rgba(99, 95, 199, 0.25)',
-        mainRed: '#EA5555',
-        mainRedHover: '#FF9898',
+        mainPurpleHover: "#A8A4FF",
+        lightPurpleHover: "rgba(99, 95, 199, 0.25)",
+        mainRed: "#EA5555",
+        mainRedHover: "#FF9898",
         lightGrey: "#F4F7FD",
         mediumGrey: "#828FA3",
         tintedMediumGrey: "rgba(130, 143, 163, 0.25)",
@@ -33,6 +33,11 @@ module.exports = {
       },
       gridTemplateColumns: {
         autoRepeat: "repeat(auto-fit, minmax(280px, 1fr))",
+      },
+      screens: {
+        mobile: "320px",
+        tablet: "481px",
+        laptop: "789px",
       },
     },
   },

@@ -7,12 +7,10 @@ import Subfield from "../../Subfield/Subfield";
 
 export type EditBoardProps = {
   closeModal: () => void;
-  currentTab: string
-}
+  currentTab: string;
+};
 
 const EditBoard = ({ closeModal, currentTab }: EditBoardProps) => {
-
-
   const columnsList = useContext(ColumnsContext);
 
   const [inputFields, setInputFields] = useState({
@@ -67,7 +65,7 @@ const EditBoard = ({ closeModal, currentTab }: EditBoardProps) => {
   }, []);
 
   return (
-    <form className="px-7 py-5 bg-white dark:bg-darkGrey w-[480px] h-[auto] rounded-[6px] dark:text-white">
+    <form className="px-7 py-5 bg-white dark:bg-darkGrey tablet:w-[480px] mobile:w-[343px] h-[auto] rounded-[6px] dark:text-white">
       <div className="font-jakartaBold">Edit Board</div>
       <div className="mt-3 flex flex-col">
         <label
@@ -103,8 +101,8 @@ const EditBoard = ({ closeModal, currentTab }: EditBoardProps) => {
             onClick={(e) => addSubfield(e)}
             text="Add New Column"
             color="mainPurple"
-            primary={theme === "light" ? "lightPurple" : "white"}
-            hoverColor={theme ==="light" ? "lightPurpleHover": "white"}
+            primary={theme === "light" ? "#635FC71A" : "white"}
+            hoverColor={theme === "light" ? "lightPurpleHover" : "white"}
           />
         </div>
       </div>

@@ -83,7 +83,7 @@ const TaskDetails = ({
 
   return (
     <>
-      <div className="px-7 py-5 bg-white w-[480px] h-[auto] dark:bg-darkGrey dark:text-white">
+      <div className="px-7 py-5 bg-white tablet:w-[480px] mobile:w-[343px] h-[auto] dark:bg-darkGrey dark:text-white">
         <div className="flex w-full items-center justify-between">
           <div className="font-jakartaBold">{taskTitle}</div>
           <div className="ml-5 pl-1 relative" onMouseEnter={openSubmenu}>
@@ -107,7 +107,7 @@ const TaskDetails = ({
           </div>
         </div>
         {description && (
-          <div className="mt-5 font-jakartaLight text-mediumGrey">
+          <div className="mt-5 font-jakartaLight text-mediumGrey mobile:text-[13px]">
             {description}
           </div>
         )}
@@ -133,7 +133,7 @@ const TaskDetails = ({
           </div>
           <div className="w-full mt-3">
             <select
-              className="w-full border-[mediumGrey] outline-none font-jakartaSemi text-[14px] border-[1px] h-[40px] px-2 bg-white dark:bg-darkGrey dark:border-tintedMediumGrey"
+              className="w-full border-[mediumGrey] outline-none font-jakartaSemi text-[13px] border-[1px] h-[40px] px-2 bg-white dark:bg-darkGrey dark:border-tintedMediumGrey"
               value={inputFields.status}
               onChange={(e) => onSelectChange(e)}
             >
@@ -150,16 +150,6 @@ const TaskDetails = ({
             text="Save Changes"
             icon={false}
             onClick={(e) => saveChanges(e)}
-          />
-        </div>
-        <div className="h-[40px] mt-5">
-          <Button
-            text="Edit Task"
-            color="mainPurple"
-            primary={theme === "light" ? "lightPurple" : "white"}
-            hoverColor={theme === "light" ? "lightPurpleHover" : "white"}
-            icon={false}
-            onClick={(e) => editTask(e)}
           />
         </div>
       </div>

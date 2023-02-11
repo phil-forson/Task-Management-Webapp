@@ -11,33 +11,36 @@ const Button = ({
   icon = true,
   type,
   hoverColor,
+  onlyIcon
 }: ButtonProps) => {
+
   return (
     <button
       className={
-        "  rounded-[24px] w-full h-full outline-none border-none " +
+        "  rounded-[24px] h-full outline-none border-none " +
         (color ? `text-${color} ` : "text-white ") +
-        (primary ? `bg-${primary} ` : "bg-mainPurple ") +
-        (hoverColor ? `hover:bg-${hoverColor} ` : "hover:bg-mainPurpleHover ")
+        (primary ? primary : " bg-mainPurple") +
+        (hoverColor ? `hover:bg-${hoverColor} ` : "hover:bg-mainPurpleHover ") + ( onlyIcon ? ' mobile:w-[54px] tablet:w-full ': ' w-full ')
       }
       onClick={onClick}
       type={type}
+      style={{ backgroundColor: primary ? primary: '#635FC7'}}
     >
-      <div className="flex mx-4 justify-center h-full items-center cursor-pointer">
+      <div className={"flex mx-4 justify-center h-full items-center cursor-pointer"}>
         {icon && (
           <svg
             width="12"
             height="12"
             xmlns="http://www.w3.org/2000/svg"
             className={
-              " mr-2 " + (color ? "fill-" + color + " " : "fill-white")
+              " align-middle " + (color ? "fill-" + color + " " : "fill-white ") + (onlyIcon ? ' mobile:mr-0 tablet:mr-2 ' : ' mr-2 ')
             }
           >
             <path d="M7.368 12V7.344H12V4.632H7.368V0H4.656v4.632H0v2.712h4.656V12z" />
           </svg>
         )}
 
-        <div className="h-fit text-[15px] font-jakartaBold">{text}</div>
+        <div className={"h-fit text-[15px] font-jakartaBold " + (onlyIcon && 'mobile:hidden tablet:block')}>{text}</div>
       </div>
     </button>
   );

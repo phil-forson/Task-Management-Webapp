@@ -60,7 +60,7 @@ const AddNewBoard = ({ closeModal }: any) => {
   const { theme } = useContext(ThemeContext)
 
   return (
-    <form className="px-7 py-5 bg-white dark:bg-darkGrey dark:text-white w-[480px] h-[auto] rounded-[6px] overflow-auto">
+    <form className="px-7 py-5 bg-white dark:bg-darkGrey dark:text-white tablet:w-[480px] mobile:w-[343px] h-[auto] rounded-[6px] overflow-auto">
       <div className="font-jakartaBold">Add New Board</div>
       <div className="mt-3 flex flex-col">
         <label

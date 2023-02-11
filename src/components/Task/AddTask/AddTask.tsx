@@ -62,9 +62,11 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
 
   const createTask = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const unfilledSubtasks = inputFields.subtasks.filter((subtask: any) => subtask.title === '')
-    console.log(unfilledSubtasks)
-    console.log(inputFields.subtasks)
+    const unfilledSubtasks = inputFields.subtasks.filter(
+      (subtask: any) => subtask.title === ""
+    );
+    console.log(unfilledSubtasks);
+    console.log(inputFields.subtasks);
     if (!inputFields.title && unfilledSubtasks.length !== 0) {
       console.log("input unfilled");
       setTitleError(true);
@@ -74,20 +76,20 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
       setTitleError(true);
       setSubtaskError(false);
       console.log(unfilledSubtasks.length !== 0);
-      console.log('title error')
+      console.log("title error");
     } else if (unfilledSubtasks.length !== 0) {
-      console.log(unfilledSubtasks)
+      console.log(unfilledSubtasks);
       setSubtaskError(true);
       setTitleError(false);
       console.log(unfilledSubtasks.length !== 0);
-      console.log('only subtask error')
+      console.log("only subtask error");
     } else {
       setTitleError(false);
       setSubtaskError(false);
       handleCloseModal();
       console.log(inputFields);
       console.log(unfilledSubtasks.length !== 0);
-      console.log('no error')
+      console.log("no error");
     }
   };
 
@@ -100,9 +102,12 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
         <div className="mt-3 flex flex-col">
           <label
             htmlFor="title"
-            className="font-jakartaBold text-mediumGrey text-[12px]"
+            className={
+              "font-jakartaBold text-mediumGrey text-[12px] w-full " +
+              (titleError && "text-mainRed")
+            }
           >
-            Title <sup className="text-mainRed">*</sup>
+            Title<sup className="text-mainRed">*</sup>
           </label>
           <div className="relative">
             <input
@@ -148,7 +153,8 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
               (subtaskError && "text-mainRed")
             }
           >
-            Subtasks{subtaskError ?  " Error !!": <sup className="text-mainRed">*</sup>} 
+            Subtasks
+            {subtaskError ? " Error !!" : <sup className="text-mainRed">*</sup>}
           </label>
           <div className="relative">
             {inputFields.subtasks.map((item: any, index) => (

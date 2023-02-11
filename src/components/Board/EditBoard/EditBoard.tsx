@@ -22,6 +22,9 @@ const EditBoard = ({ closeModal, currentTab }: EditBoardProps) => {
     }),
   });
 
+  const [nameError, setNameError] = useState<boolean>(false);
+  const [columnError, setColumnError] = useState<boolean>(false);
+
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let data: any = { ...inputFields };
     data["name"] = e.target.value;
@@ -53,9 +56,35 @@ const EditBoard = ({ closeModal, currentTab }: EditBoardProps) => {
     });
   };
 
-  const saveChanges = () => {
-    console.log(inputFields);
-    closeModal();
+  const saveChanges = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    const unfilledColumns = inputFields.columns.filter(
+      (column: any) => column.column === ""
+    );
+    if (!inputFields.name && unfilledColumns.length !== 0) {
+      console.log("input unfilled");
+      setNameError(true);
+      setColumnError(true);
+      console.log(unfilledColumns.length !== 0);
+    } else if (!inputFields.name) {
+      setNameError(true);
+      setColumnError(false);
+      console.log(unfilledColumns.length !== 0);
+      console.log("title error");
+    } else if (unfilledColumns.length !== 0) {
+      console.log(unfilledColumns);
+      setColumnError(true);
+      setNameError(false);
+      console.log(unfilledColumns.length !== 0);
+      console.log("only Column error");
+    } else {
+      setNameError(false);
+      setColumnError(false);
+      closeModal();
+      console.log(inputFields);
+      console.log(unfilledColumns.length !== 0);
+      console.log("no error");
+    }
   };
 
   const { theme } = useContext(ThemeContext);
@@ -70,32 +99,56 @@ const EditBoard = ({ closeModal, currentTab }: EditBoardProps) => {
       <div className="mt-3 flex flex-col">
         <label
           htmlFor="name"
-          className="font-jakartaBold text-mediumGrey text-[12px] w-full"
+          className={"font-jakartaBold text-mediumGrey text-[12px] w-full " + (nameError && "text-mainRed")}
         >
-          Board Name
+         Board Name<sup className="text-mainRed">*</sup>
         </label>
-        <input
-          className="h-[40px] border-[1px] rounded-[2px] border-[rgba(130,143,163,.25)] font-jakartaSemi px-3 text-[13px] bg-transparent outline-none "
-          placeholder="e.g. Web Design"
-          name="name"
-          value={inputFields.name}
-          onChange={(e) => handleFormChange(e)}
-        />
+        <div className="relative">
+          <input
+            className={
+              "h-[40px] w-full border-[1px] bg-transparent rounded-[2px] border-[rgba(130,143,163,.25)] font-jakartaSemi px-3 text-[13px] outline-none " +
+              (nameError ? "border-mainRed" : "border-[rgba(130,143,163,.25)] ")
+            }
+            placeholder="e.g. Web Design"
+            name="name"
+            value={inputFields.name}
+            onChange={(e) => handleFormChange(e)}
+          />
+          {nameError && (
+            <div className="text-mainRed text-[13px] absolute bottom-0 title-error font-jakartaSemi">
+              Can't be empty
+            </div>
+          )}
+        </div>
       </div>
       <div className="mt-3 flex flex-col">
-        <label className="font-jakartaBold text-mediumGrey text-[12px] w-full">
+      <label
+          className={
+            "font-jakartaBold text-mediumGrey text-[12px] w-full " +
+            (columnError && "text-mainRed")
+          }
+        >
           Board Columns
+          {columnError ? " Error !!" : <sup className="text-mainRed">*</sup>}
         </label>
-        {inputFields.columns.map((item: any, index: any) => (
-          <Subfield
-            index={index}
-            input={item.column}
-            deleteSubfield={deleteSubfield}
-            handleSubfieldChange={handleSubfieldChange}
-            key={index}
-            name="column"
-          />
-        ))}
+        <div className="relative">
+          {inputFields.columns.map((item: any, index: number) => (
+            <Subfield
+              index={index}
+              key={index}
+              input={item.column}
+              deleteSubfield={deleteSubfield}
+              handleSubfieldChange={handleSubfieldChange}
+              placeholder="eg. Todo"
+              name="column"
+            />
+          ))}
+          {columnError && (
+            <div className="text-mainRed text-[13px] float-right mb-3 font-jakartaBold">
+              Please fill empty column field(s)
+            </div>
+          )}
+          </div>
         <div className="h-[40px] mt-2">
           <Button
             onClick={(e) => addSubfield(e)}
@@ -107,7 +160,7 @@ const EditBoard = ({ closeModal, currentTab }: EditBoardProps) => {
         </div>
       </div>
       <div className="mt-5 h-[40px]">
-        <Button text="Save Changes" icon={false} onClick={saveChanges} />
+        <Button text="Save Changes" icon={false} onClick={(e) => saveChanges(e)} />
       </div>
     </form>
   );

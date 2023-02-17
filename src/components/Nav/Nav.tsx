@@ -127,7 +127,7 @@ const Nav = ({
               <div className="laptop:text-[24px] tablet:text-[20px] my-5 ml-3 font-bold font-jakartaBold tablet:block mobile:hidden">
                 {currentTab}
               </div>
-              <div className="relative tablet:hidden">
+              <div className="relative tablet:hidden font-jakartaBold ">
                 <Dropdown
                   dropdownList={boardsList}
                   value={currentTab}
@@ -156,15 +156,17 @@ const Nav = ({
                   </g>
                 </svg>
                 {openSubmenu && (
+                  // <div className="relative">
                   <Submenu
                     submenu={[
                       { text: "Edit", onClick: onOpenEditBoard },
                       { text: "Delete", onClick: onOpenDeleteBoard },
                     ]}
-                    position=" fixed right-[30px] top-[52px]"
+                    position=" fixed translate-y-1/2 top-[50px] right-[40px] "
                     onMouseLeave={onCloseSubmenu}
                     onMouseEnter={onOpenSubmenu}
                   />
+                  // </div>
                 )}
               </div>
             </div>

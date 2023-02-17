@@ -17,22 +17,19 @@ const SidebarModal = ({
   setCurrentTab,
   openBoardModal,
 }: SidebarModalProps) => {
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("theme") === "dark"
+  );
 
-    const [darkMode, setDarkMode] = useState(
-        localStorage.getItem("theme") === "dark"
-      );
-    
-    
-    
-      const { setTheme } = useContext(ThemeContext);
-    
-      const handleSwitchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.checked) {
-          setTheme("dark");
-        } else {
-          setTheme("light");
-        }
-      };
+  const { setTheme } = useContext(ThemeContext);
+
+  const handleSwitchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  };
 
   return (
     <div className="py-5  bg-white tablet:w-[480px] mobile:w-[264px] h-[auto]  rounded-[6px] dark:bg-darkGrey  text-mediumGrey dark:text-mediumGrey font-jakartaBold ">
@@ -92,7 +89,6 @@ const SidebarModal = ({
               </svg>
             </div>
           </div>
-          
         </div>
       </div>
     </div>

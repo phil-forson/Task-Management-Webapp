@@ -12,7 +12,6 @@ const Board = ({
   setShowSidebar,
   currentTab,
   data,
-  columnsList,
 }: BoardProps) => {
   const [openEditBoard, setOpenEditBoard] = useState(false);
 

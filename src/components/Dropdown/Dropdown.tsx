@@ -52,13 +52,13 @@ const Dropdown = ({
     <div className="dropdown font-jakartaSemi ">
       <div
         className={
-          "dropdown-btn " +
+          "dropdown-btn cursor-pointer select-none " +
           (addBorder &&
             "bg-white border-[1px] dark:bg-darkGrey dark:border-tintedMediumGrey")
         }
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div>{selected}</div>
+        <div>{value}</div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="w-4 h-4"
@@ -77,14 +77,14 @@ const Dropdown = ({
       {isOpen && (
         <motion.div
           className={
-            "dropdown-content  dark:bg-veryDarkGrey text-mediumGrey " +
+            "dropdown-content border-[1px] dark:border-darkLines bg-white dark:bg-veryDarkGrey text-mediumGrey " +
             (position && position)
           }
           variants={dropIn}
         >
           {dropdownList.map((item: any, index: number) => (
             <div
-              className={"dropdown-item hover:bg-lightPurpleHover "}
+              className={"dropdown-item cursor-pointer select-none hover:bg-lightPurpleHover "}
               onClick={() => handleSelect(item)}
               key={index}
             >

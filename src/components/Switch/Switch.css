@@ -27,7 +27,7 @@ label input:checked + span:before {
   
 }
 
-span {
+.switch-span {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -42,7 +42,7 @@ span {
   height: 20px;
 }
 
-span::before {
+.switch-span::before {
   position: absolute;
   content: "";
   height: 14px;

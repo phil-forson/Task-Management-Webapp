@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { SubfieldProps } from "../../types";
 
 const Subfield = ({
@@ -7,16 +8,30 @@ const Subfield = ({
   handleSubfieldChange,
   placeholder,
   name,
+  emptySubfieldIds,
 }: SubfieldProps) => {
+  const isIndexInArray = (num: number, arr: Array<number>) => {
+    return arr.includes(num);
+  };
+  const isEmpty = isIndexInArray(index, emptySubfieldIds);
+
   return (
-    <div className="flex items-center justify-between mb-3">
+    <div className="flex items-center justify-between mb-3 relative">
       <input
-        className="h-[40px] w-[94%] border-[1px] rounded-[2px] bg-transparent border-[rgba(130,143,163,.25)] font-jakartaSemi px-3 text-[13px] outline-none "
+        className={
+          "h-[40px] w-[94%] border-[1px] rounded-[2px] bg-transparent border-[rgba(130,143,163,.25)] font-jakartaSemi px-3 text-[13px] outline-none " +
+          (isEmpty ? "border-mainRed " : " ")
+        }
         placeholder={placeholder ? placeholder : "e.g. Take coffee break"}
         name={name}
         value={input}
         onChange={(e) => handleSubfieldChange(e, index)}
       />
+      {isEmpty && (
+        <div className="text-mainRed text-[13px] absolute bottom-0 right-1 title-error font-jakartaSemi">
+          Can't be empty
+        </div>
+      )}
       <svg
         width="15"
         height="15"

@@ -17,6 +17,8 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
     ],
     status: "todo",
   });
+  const [emptySubtaskIds, setEmptySubtaskIds] = useState<Array<number>>([])
+
 
   const [titleError, setTitleError] = useState<boolean>(false);
   const [subtaskError, setSubtaskError] = useState<boolean>(false);
@@ -62,11 +64,16 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
 
   const createTask = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setEmptySubtaskIds([])
     const unfilledSubtasks = inputFields.subtasks.filter(
       (subtask: any) => subtask.title === ""
     );
-    console.log(unfilledSubtasks);
-    console.log(inputFields.subtasks);
+
+    for (let i = 0; i < inputFields.subtasks.length; i++) {
+      if (inputFields.subtasks[i].title == "") {
+        setEmptySubtaskIds(prevIds => [...prevIds, i])
+      }
+    }
     if (!inputFields.title && unfilledSubtasks.length !== 0) {
       console.log("input unfilled");
       setTitleError(true);
@@ -153,8 +160,7 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
               (subtaskError && "text-mainRed")
             }
           >
-            Subtasks
-            {subtaskError ? " Error !!" : <sup className="text-mainRed">*</sup>}
+            Subtasks<sup className="text-mainRed">*</sup>
           </label>
           <div className="relative">
             {inputFields.subtasks.map((item: any, index) => (
@@ -165,11 +171,12 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
                 handleSubfieldChange={(e) => handleSubtaskChange(index, e)}
                 name="title"
                 key={index}
+                emptySubfieldIds={emptySubtaskIds}
               />
             ))}
             {subtaskError && (
               <div className="text-mainRed text-[13px] float-right mb-3 font-jakartaBold">
-                Please fill empty subtask field(s)
+                Please fill empty subtask field{emptySubtaskIds.length > 1 && <span>s</span>}
               </div>
             )}
           </div>

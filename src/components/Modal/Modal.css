@@ -1,7 +1,7 @@
 .modal {
     /* width: clamp(50%, 700px, 90%); */
     /* height: min(50%, 300px); */
-    max-height: 100%;
+    max-height: 80vh;
     margin: auto;
     /* padding: 0 2rem; */
     border-radius: 12px;

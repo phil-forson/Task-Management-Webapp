@@ -16,6 +16,8 @@ const AddNewBoard = ({ closeModal }: any) => {
     ],
   });
 
+  const [emptyColumnIds, setEmptyColumnIds] = useState<Array<number>>([])
+
   const [nameError, setNameError] = useState<boolean>(false);
   const [columnError, setColumnError] = useState<boolean>(false);
 
@@ -59,6 +61,13 @@ const AddNewBoard = ({ closeModal }: any) => {
     const unfilledColumns = inputFields.columns.filter(
       (column: any) => column.column === ""
     );
+
+    for (let i = 0; i < inputFields.columns.length; i++) {
+      if (inputFields.columns[i].column == "") {
+        setEmptyColumnIds(prevIds => [...prevIds, i])
+      }
+    }
+
     if (!inputFields.name && unfilledColumns.length !== 0) {
       console.log("input unfilled");
       setNameError(true);
@@ -125,8 +134,8 @@ const AddNewBoard = ({ closeModal }: any) => {
             (columnError && "text-mainRed")
           }
         >
-          Columns
-          {columnError ? " Error !!" : <sup className="text-mainRed">*</sup>}
+          Columns<sup className="text-mainRed">*</sup>
+        
         </label>
         <div className="relative">
           {inputFields.columns.map((item: any, index) => (
@@ -137,11 +146,12 @@ const AddNewBoard = ({ closeModal }: any) => {
               handleSubfieldChange={handleSubfieldChange}
               placeholder="eg. Todo"
               name="column"
+              emptySubfieldIds={emptyColumnIds}
             />
           ))}
           {columnError && (
             <div className="text-mainRed text-[13px] float-right mb-3 font-jakartaBold">
-              Please fill empty column field(s)
+              Please fill empty column field{emptyColumnIds.length > 1 && <span>s</span>}
             </div>
           )}
         </div>

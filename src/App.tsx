@@ -12,7 +12,7 @@ function App() {
   const [currentTab, setCurrentTab] = useState<string>("");
   const [columnList, setColumnList] = useState<Array<any>>([]);
   const [theme, setTheme] = useState(localStorage.getItem("theme"));
-  const [boardModalOpen, setBoardModalOpen] = useState(false)
+  const [boardModalOpen, setBoardModalOpen] = useState(false);
 
   const openBoardModal = () => {
     setBoardModalOpen(true);
@@ -35,6 +35,7 @@ function App() {
     });
     setColumnList(arr);
   };
+
   useEffect(() => {
     if (data.boards) {
       setCurrentTab(data.boards[0].name);
@@ -50,7 +51,9 @@ function App() {
   }, [currentTab]);
 
   useEffect(() => {
-    localStorage.setItem("theme", theme || "light");
+    if (!!localStorage.getItem("theme")) {
+      localStorage.setItem("theme", theme || "light");
+    }
     if (localStorage.getItem("theme") == "dark") {
       document.documentElement.classList.add("dark");
     } else {

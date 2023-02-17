@@ -24,7 +24,7 @@ const Button = ({
       }
       onClick={onClick}
       type={type}
-      style={{ backgroundColor: primary ? primary: '#635FC7'}}
+      style={{ backgroundColor: primary ? primary : '#635FC7'}}
     >
       <div className={"flex mx-4 justify-center h-full items-center cursor-pointer"}>
         {icon && (

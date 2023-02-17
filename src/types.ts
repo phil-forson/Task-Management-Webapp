@@ -98,6 +98,7 @@ export type SubfieldProps = {
   ) => void;
   placeholder?: string;
   name: string;
+  emptySubfieldIds: Array<number>
 };
 
 export type CheckboxProps = {

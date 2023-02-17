@@ -21,6 +21,8 @@ const EditTask = ({ task, handleCloseModal }: EditTaskProps) => {
     status: task.status,
   });
 
+  const [emptySubtaskIds, setEmptySubtaskIds] = useState<Array<number>>([])
+
   const [titleError, setTitleError] = useState<boolean>(false);
   const [subtaskError, setSubtaskError] = useState<boolean>(false);
 
@@ -66,6 +68,13 @@ const EditTask = ({ task, handleCloseModal }: EditTaskProps) => {
     const unfilledSubtasks = inputFields.subtasks.filter(
       (subtask: any) => subtask.title === ""
     );
+
+    for (let i = 0; i < inputFields.subtasks.length; i++) {
+      if (inputFields.subtasks[i].title == "") {
+        setEmptySubtaskIds(prevIds => [...prevIds, i])
+      }
+    }
+
     console.log(unfilledSubtasks);
     console.log(inputFields.subtasks);
     if (!inputFields.title && unfilledSubtasks.length !== 0) {
@@ -166,6 +175,7 @@ const EditTask = ({ task, handleCloseModal }: EditTaskProps) => {
                 handleSubfieldChange={(e) => handleSubtaskChange(index, e)}
                 name="title"
                 key={index}
+                emptySubfieldIds={emptySubtaskIds}
               />
             ))}
             {subtaskError && (

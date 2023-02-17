@@ -79,7 +79,7 @@ const Nav = ({
 
   return (
     <>
-      <div className="w-[100vw] h-[85px] relative">
+      <div className="w-full h-[85px] relative">
         <div
           className={
             "w-full h-[85px] bg-white dark:bg-darkGrey   dark:border-darkLines z-10 flex overflow-hidden fixed md:fixed sm:fixed sm:w-full md:w-full"

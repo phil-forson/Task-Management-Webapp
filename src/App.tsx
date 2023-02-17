@@ -47,6 +47,8 @@ function App() {
     } else {
       setCurrentTab("No Boards Created");
     }
+    console.log('get theme')
+    console.log(!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
   }, []);
 
   useEffect(() => {
@@ -59,7 +61,7 @@ function App() {
     if (!!localStorage.getItem("theme")) {
       localStorage.setItem("theme", theme || "light");
     }
-    if (localStorage.getItem("theme") == "dark") {
+    if (localStorage.getItem("theme") == "dark"|| ( window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");

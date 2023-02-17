@@ -3,6 +3,7 @@ import { ColumnsContext } from "../../../contexts/ColumnsContext";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import { IAddTask } from "../../../types";
 import Button from "../../Button/Button";
+import Dropdown from "../../Dropdown/Dropdown";
 import Subfield from "../../Subfield/Subfield";
 
 export type EditTaskProps = {
@@ -53,6 +54,12 @@ const EditTask = ({ task, handleCloseModal }: EditTaskProps) => {
     data[e.target.name] = e.target.value;
     setInputFields(data);
   };
+
+  const onSelectChange = (item: any) => {
+    let data: any = {...inputFields}
+    data.status = item
+    setInputFields(data)
+  }
 
   const AddSubtaskFields = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -195,14 +202,14 @@ const EditTask = ({ task, handleCloseModal }: EditTaskProps) => {
             />
           </div>
         </div>
-        <div className="mt-3 flex flex-col">
+        <div className="mt-3 flex flex-col text-[13px] ">
           <label
             htmlFor="status"
             className="font-jakartaBold text-mediumGrey text-[12px]"
           >
             Status<sup className="text-mainRed">*</sup>
           </label>
-          <select
+          {/* <select
             className="w-full border-[mediumGrey] outline-none dark:bg-darkGrey dark:border-tintedMediumGrey dark:text-white font-jakartaSemi text-[14px] border-[1px] h-[40px] px-2"
             name="status"
             value={inputFields.status}
@@ -213,7 +220,12 @@ const EditTask = ({ task, handleCloseModal }: EditTaskProps) => {
                 {column}
               </option>
             ))}
-          </select>
+          </select> */}
+          <Dropdown
+              value={inputFields.status}
+              dropdownList={columnsList}
+              onSelectChange={onSelectChange}
+            />
         </div>
 
         <div className="h-[40px] mt-5">

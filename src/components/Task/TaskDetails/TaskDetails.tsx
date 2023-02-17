@@ -1,12 +1,10 @@
 import { useContext, useState } from "react";
-import Ellipsis from "../../../assets/icon-vertical-ellipsis.svg";
 import { ColumnsContext } from "../../../contexts/ColumnsContext";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import Button from "../../Button/Button";
 import Checkbox from "../../Checkbox/Checkbox";
-import Modal from "../../Modal/Modal";
+import Dropdown from "../../Dropdown/Dropdown";
 import Submenu from "../../Submenu/Submenu";
-import EditTask from "../EditTask/EditTask";
 import "./TaskDetails.css";
 
 const TaskDetails = ({
@@ -33,10 +31,9 @@ const TaskDetails = ({
 
   const [submenuOpen, setSubmenuOpen] = useState(false);
 
-  const openSubmenu = () => setSubmenuOpen(true)
+  const openSubmenu = () => setSubmenuOpen(true);
 
-  const closeSubmenu = () => setSubmenuOpen(false)
-
+  const closeSubmenu = () => setSubmenuOpen(false);
 
   const columnsList = useContext(ColumnsContext);
 
@@ -49,9 +46,9 @@ const TaskDetails = ({
     setInputFields(data);
   };
 
-  const onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const onSelectChange = (option: any) => {
     const data = { ...inputFields };
-    data.status = e.target.value;
+    data.status = option;
     setInputFields(data);
   };
 
@@ -64,17 +61,17 @@ const TaskDetails = ({
   const editTask = (e: React.MouseEvent<HTMLButtonElement>) => {
     console.log("opeening editttt");
     e.preventDefault();
-    openEditModal()
+    openEditModal();
     closeModal();
   };
 
   const onEditTask = (task: any) => {
-    openEditModal()
+    openEditModal();
     closeModal();
   };
 
   const onDeleteTask = () => {
-    openDeleteModal()
+    openDeleteModal();
     closeModal();
     console.log("deleting task");
   };
@@ -131,7 +128,7 @@ const TaskDetails = ({
           <div className="font-jakartaBold text-mediumGrey text-[14px]">
             Current Status
           </div>
-          <div className="w-full mt-3">
+          {/* <div className="w-full mt-3">
             <select
               className="w-full border-[mediumGrey] outline-none font-jakartaSemi text-[13px] border-[1px] h-[40px] px-2 bg-white dark:bg-darkGrey dark:border-tintedMediumGrey"
               value={inputFields.status}
@@ -143,6 +140,15 @@ const TaskDetails = ({
                 </option>
               ))}
             </select>
+          </div> */}
+          {/* <Select dropdownItems={columnsList} onOptionChange={(e) => onSelectChange(e)} value={inputFields.status} />
+           */}
+          <div className="w-full mt-3 text-[13px] ">
+            <Dropdown
+              value={inputFields.status}
+              dropdownList={columnsList}
+              onSelectChange={onSelectChange}
+            />
           </div>
         </div>
         <div className="h-[40px] mt-5">

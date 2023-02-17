@@ -11,6 +11,7 @@ function App() {
   const [showSidebar, setShowSidebar] = useState<boolean>(true);
   const [currentTab, setCurrentTab] = useState<string>("");
   const [columnList, setColumnList] = useState<Array<any>>([]);
+  const [boardsList, setBoardsList] = useState<Array<any>>([]);
   const [theme, setTheme] = useState(localStorage.getItem("theme"));
   const [boardModalOpen, setBoardModalOpen] = useState(false);
 
@@ -39,6 +40,10 @@ function App() {
   useEffect(() => {
     if (data.boards) {
       setCurrentTab(data.boards[0].name);
+      for (let i = 0; i < data.boards.length; i++) {
+        setBoardsList((prevBoards) => [...prevBoards, data.boards[i].name]);
+      }
+      console.log(currentTab)
     } else {
       setCurrentTab("No Boards Created");
     }
@@ -75,6 +80,7 @@ function App() {
             data={data}
             openBoardModal={openBoardModal}
             closeBoardModal={closeBoardModal}
+            boardsList={boardsList}
           />
           <div className="flex">
             {showSidebar && (

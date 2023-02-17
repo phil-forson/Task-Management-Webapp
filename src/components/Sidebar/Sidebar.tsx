@@ -2,7 +2,7 @@ import { SidebarProps } from "../../types";
 import Switch from "../Switch/Switch";
 import data from "../../data.json";
 import Boardtab from "../Board/BoardTab/Boardtab";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import Modal from "../Modal/Modal";
 import AddNewBoard from "../Board/AddNewBoard/AddNewBoard";
 import { ThemeContext } from "../../contexts/ThemeContext";
@@ -13,14 +13,11 @@ const Sidebar = ({
   setCurrentTab,
   boardModalOpen,
   openBoardModal,
-  closeBoardModal
+  closeBoardModal,
 }: SidebarProps) => {
-
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("theme") === "dark"
   );
-
-
 
   const { setTheme } = useContext(ThemeContext);
 
@@ -33,9 +30,7 @@ const Sidebar = ({
   };
   return (
     <>
-      <div
-        className="relative laptop:w-[300px] laptop:min-w-[300px] tablet:min-w-[261px] tablet:max-w-[261px] h-[100vh] mobile:hidden tablet:block "
-      >
+      <div className="relative laptop:w-[300px] laptop:min-w-[300px] tablet:min-w-[261px] tablet:max-w-[261px] h-[100vh] mobile:hidden tablet:block ">
         <div
           className="laptop:max-w-[300px] laptop:min-w-[300px] tablet:max-w-[261px] tablet:min-w-[261px] fixed left-0 top-[85px] border-r-[1px] border-lightGrey dark:border-darkLines h-[100vh] dark:bg-darkGrey text-mediumGrey z-10 bg-white"
           style={{ gridColumn: 1 }}

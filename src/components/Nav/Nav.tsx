@@ -5,6 +5,7 @@ import { NavProps } from "../../types";
 import EditBoard from "../Board/EditBoard/EditBoard";
 import Button from "../Button/Button";
 import Delete from "../DeleteItem/Delete";
+import Dropdown from "../Dropdown/Dropdown";
 import Modal from "../Modal/Modal";
 import SidebarModal from "../SidebarModal/SidebarModal";
 import Submenu from "../Submenu/Submenu";
@@ -17,6 +18,7 @@ const Nav = ({
   data,
   openBoardModal,
   closeBoardModal,
+  boardsList,
 }: NavProps) => {
   const [openAddTask, setOpenAddTask] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState(false);
@@ -71,8 +73,8 @@ const Nav = ({
     openBoardModal();
   };
 
-  const onChangeColumn = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCurrentTab(e.target.value);
+  const onChangeColumn = (item: any) => {
+    setCurrentTab(item);
   };
 
   const columnList = useContext(ColumnsContext);
@@ -125,17 +127,15 @@ const Nav = ({
               <div className="laptop:text-[24px] tablet:text-[20px] my-5 ml-3 font-bold font-jakartaBold tablet:block mobile:hidden">
                 {currentTab}
               </div>
-              <select
-                className="outline-none border-none my-5 ml-3 font-bold font-jakartaBold tablet:hidden  dark:bg-darkGrey dark:border-tintedMediumGrey"
-                value={currentTab}
-                onChange={(e) => onChangeColumn(e)}
-              >
-                {data.boards.map((board: any, index: number) => (
-                  <option value={board.name} key={index}>
-                    {board.name}
-                  </option>
-                ))}
-              </select>
+              <div className="relative tablet:hidden">
+                <Dropdown
+                  dropdownList={boardsList}
+                  value={currentTab}
+                  onSelectChange={onChangeColumn}
+                  addBorder={false}
+                  position={"fixed"}
+                />
+              </div>
             </div>
             <div className="flex my-5 ">
               <div className="h-[40px] mr-8">

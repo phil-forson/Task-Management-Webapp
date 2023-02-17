@@ -10,6 +10,7 @@ export type NavProps = {
   data: any;
   openBoardModal: () => void;
   closeBoardModal: () => void;
+  boardsList: Array<any>
 };
 
 export type SidebarProps = {

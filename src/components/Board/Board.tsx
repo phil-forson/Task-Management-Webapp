@@ -23,7 +23,7 @@ const Board = ({
   return (
     <BoardContext.Provider value={currentTab}>
       <div
-        className=" p-4 bg-lightGrey max-h-[100vh] dark:bg-veryDarkGrey flex-1 overflow-auto "
+        className=" p-4 bg-lightGrey min-h-screen max-h-[100vh] dark:bg-veryDarkGrey flex-1 overflow-auto "
         style={{ gridColumn: 2, gridRow: 2 }}
       >
         {/* <Emptyboard columnsList={columnsList}/> */}

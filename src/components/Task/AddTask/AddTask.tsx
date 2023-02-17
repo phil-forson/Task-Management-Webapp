@@ -3,6 +3,7 @@ import { ColumnsContext } from "../../../contexts/ColumnsContext";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import { AddTaskProps, IAddTask } from "../../../types";
 import Button from "../../Button/Button";
+import Dropdown from "../../Dropdown/Dropdown";
 import Subfield from "../../Subfield/Subfield";
 import "./AddTask.css";
 
@@ -15,7 +16,7 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
         title: "",
       },
     ],
-    status: "todo",
+    status: "Todo",
   });
   const [emptySubtaskIds, setEmptySubtaskIds] = useState<Array<number>>([])
 
@@ -52,6 +53,12 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
     data[e.target.name] = e.target.value;
     setInputFields(data);
   };
+
+  const onSelectChange = (item: any) => {
+    let data: any = {...inputFields}
+    data.status = item
+    setInputFields(data)
+  }
 
   const AddSubtaskFields = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -191,14 +198,14 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
             />
           </div>
         </div>
-        <div className="mt-3 flex flex-col">
+        <div className="mt-3 flex flex-col text-[13px] ">
           <label
             htmlFor="status"
             className="font-jakartaBold text-mediumGrey text-[12px] w-full"
           >
             Status<sup className="text-mainRed">*</sup>
           </label>
-          <select
+          {/* <select
             className="w-full border-[mediumGrey] outline-none dark:bg-darkGrey dark:border-tintedMediumGrey dark:text-white font-jakartaSemiBold text-[14px] border-[1px] h-[40px] px-2 focus:border-mainPurple dark:focus:border-mainPurple"
             name="status"
             value={inputFields.status}
@@ -209,7 +216,12 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
                 {column}
               </option>
             ))}
-          </select>
+          </select> */}
+          <Dropdown
+              value={inputFields.status}
+              dropdownList={columnsList}
+              onSelectChange={onSelectChange}
+            />
         </div>
 
         <div className="h-[40px] mt-5">

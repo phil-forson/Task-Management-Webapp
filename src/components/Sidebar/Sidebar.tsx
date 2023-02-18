@@ -1,6 +1,5 @@
 import { SidebarProps } from "../../types";
 import Switch from "../Switch/Switch";
-import data from "../../data.json";
 import Boardtab from "../Board/BoardTab/Boardtab";
 import { useContext, useState } from "react";
 import Modal from "../Modal/Modal";
@@ -17,6 +16,7 @@ const Sidebar = ({
   boardModalOpen,
   openBoardModal,
   closeBoardModal,
+  data
 }: SidebarProps) => {
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("theme") === "dark"
@@ -49,7 +49,7 @@ const Sidebar = ({
             <div className="font-jakartaBold uppercase text-[12px]  ml-8 tracking-widest h-[48px]">
               All boards ( 3 )
             </div>
-            {data.boards.map((item, index) => (
+            {data.map((item: any, index: number) => (
               <Boardtab
                 name={item.name}
                 key={index}

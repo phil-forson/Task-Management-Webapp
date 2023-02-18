@@ -5,17 +5,17 @@ import Nav from "./components/Nav/Nav";
 import Sidebar from "./components/Sidebar/Sidebar";
 import { ColumnsContext } from "./contexts/ColumnsContext";
 import { ThemeContext } from "./contexts/ThemeContext";
-import axios from 'axios'
+import axios from "axios";
 
 function App() {
   const [showSidebar, setShowSidebar] = useState<boolean>(true);
+  const [currentTabId, setCurrentTabId] = useState<number>();
   const [currentTab, setCurrentTab] = useState<string>("");
   const [columnList, setColumnList] = useState<Array<any>>([]);
   const [boardsList, setBoardsList] = useState<Array<any>>([]);
   const [theme, setTheme] = useState(localStorage.getItem("theme"));
   const [boardModalOpen, setBoardModalOpen] = useState(false);
-  const [data, setData] = useState<any>([])
-
+  const [data, setData] = useState<any>([]);
 
   const openBoardModal = () => {
     setBoardModalOpen(true);
@@ -40,40 +40,41 @@ function App() {
   };
 
   const getBoards = () => {
-    axios.get('http://localhost:3000/boards').then((res) => {
-      if(res.status == 200){
-
-        setData(res.data)
-        console.log(res.data)
+    axios.get("http://localhost:3000/boards").then((res) => {
+      if (res.status == 200) {
+        setData(res.data);
+        console.log(res.data);
       }
-    })
-  }
+    });
+  };
 
   useEffect(() => {
-    console.log(data)
-    console.log('data')
-  }, [data])
+    console.log(data);
+    console.log("data");
+  }, [data]);
 
   useEffect(() => {
-    getBoards()
-    console.log(data)
-    if (data) {
-      setCurrentTab(data[0]?.name);
-      console.log(currentTab)
-      console.log('current tab')
+    getBoards();
+    console.log(data);
+    setCurrentTabId(data[0]?.id);
+    if (data.length > 0) {
+      const currentBoard = data.find((board: any) => board.id === currentTabId);
+      setCurrentTab(currentBoard?.name);
+      console.log(currentTab);
+      console.log("current tab");
       for (let i = 0; i < data.length; i++) {
         setBoardsList((prevBoards) => [...prevBoards, data[i].name]);
       }
-      console.log(currentTab)
+      console.log(currentTab);
     } else {
-      console.log('no boards')
+      console.log("no boards");
       setCurrentTab("No Boards Created");
     }
     if (!!localStorage.getItem("theme")) {
-      localStorage.setItem("theme",  "light");
+      localStorage.setItem("theme", "light");
     }
-    console.log('get theme')
-    console.log(!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    console.log("get theme");
+    console.log(data.length > 0);
   }, []);
 
   useEffect(() => {
@@ -83,8 +84,7 @@ function App() {
   }, [currentTab]);
 
   useEffect(() => {
- 
-    if (localStorage.getItem("theme") == "dark" ) {
+    if (localStorage.getItem("theme") == "dark") {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
@@ -110,6 +110,7 @@ function App() {
           <div className="flex">
             {showSidebar && (
               <Sidebar
+                data={data}
                 setShowSidebar={setShowSidebar}
                 currentTab={currentTab}
                 setCurrentTab={setCurrentTab}

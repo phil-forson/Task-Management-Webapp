@@ -20,6 +20,7 @@ export type SidebarProps = {
   boardModalOpen: boolean;
   openBoardModal: () => void;
   closeBoardModal: () => void;
+  data: any
 };
 
 export type BoardProps = {

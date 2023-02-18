@@ -26,8 +26,12 @@ const SidebarModal = ({
   const handleSwitchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
       setTheme("dark");
+      localStorage.setItem("theme", "dark");
+      console.log('setting to dark')
     } else {
       setTheme("light");
+      console.log('setting to light')
+      localStorage.setItem("theme", "light");
     }
   };
 

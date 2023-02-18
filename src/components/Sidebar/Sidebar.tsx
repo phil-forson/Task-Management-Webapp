@@ -7,6 +7,9 @@ import Modal from "../Modal/Modal";
 import AddNewBoard from "../Board/AddNewBoard/AddNewBoard";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
+
+
+
 const Sidebar = ({
   setShowSidebar,
   currentTab,
@@ -23,14 +26,21 @@ const Sidebar = ({
 
   const handleSwitchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
+      console.log("setting to dark");
       setTheme("dark");
+      localStorage.setItem("theme", "dark");
     } else {
       setTheme("light");
+      console.log("setting to light");
+      localStorage.setItem("theme", "light");
     }
   };
+
   return (
     <>
-      <div className="relative laptop:w-[300px] laptop:min-w-[300px] tablet:min-w-[261px] tablet:max-w-[261px] h-[100vh] mobile:hidden tablet:block ">
+      <div
+        className="relative laptop:w-[300px] laptop:min-w-[300px] tablet:min-w-[261px] tablet:max-w-[261px] h-[100vh] mobile:hidden tablet:block "
+      >
         <div
           className="laptop:max-w-[300px] laptop:min-w-[300px] tablet:max-w-[261px] tablet:min-w-[261px] fixed left-0 top-[85px] border-r-[1px] border-lightGrey dark:border-darkLines h-[100vh] dark:bg-darkGrey text-mediumGrey z-10 bg-white"
           style={{ gridColumn: 1 }}

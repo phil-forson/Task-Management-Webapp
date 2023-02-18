@@ -33,21 +33,21 @@ const Dropdown = ({
     visible: {
       opacity: 1,
       transition: {
-        duration: 0.5,
+        duration: 0.3,
       },
     },
     exit: {
       opacity: 0,
       transition: {
-        duration: 0.5,
-      },
+        duration: 1
+      }
     },
   };
 
   useEffect(() => {
-    console.log('valuing')
-    console.log(value)
-  }, [])
+    console.log("valuing");
+    console.log(value);
+  }, []);
   return (
     <div className="dropdown font-jakartaSemi ">
       <div
@@ -76,15 +76,20 @@ const Dropdown = ({
       </div>
       {isOpen && (
         <motion.div
+          variants={dropIn}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
           className={
             "dropdown-content border-[1px] dark:border-darkLines bg-white dark:bg-veryDarkGrey text-mediumGrey " +
             (position && position)
           }
-          variants={dropIn}
         >
           {dropdownList.map((item: any, index: number) => (
             <div
-              className={"dropdown-item cursor-pointer select-none hover:bg-lightPurpleHover "}
+              className={
+                "dropdown-item cursor-pointer select-none hover:bg-lightPurpleHover "
+              }
               onClick={() => handleSelect(item)}
               key={index}
             >

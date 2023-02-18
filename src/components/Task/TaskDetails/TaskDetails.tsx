@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ColumnsContext } from "../../../contexts/ColumnsContext";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import Button from "../../Button/Button";
@@ -77,6 +77,10 @@ const TaskDetails = ({
   };
 
   const { theme } = useContext(ThemeContext);
+
+  useEffect(() => {
+    console.log(inputFields)
+  }, [])
 
   return (
     <>

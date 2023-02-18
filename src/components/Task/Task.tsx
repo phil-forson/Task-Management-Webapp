@@ -9,8 +9,13 @@ const Task = ({ currentTab, data, addColumn }: TaskProps) => {
   const [taskObj, setTaskObj] = useState<any>({});
 
   useEffect(() => {
-    setTaskObj(data.boards.find((item: any) => item.name == currentTab));
+    setTaskObj(data.find((item: any) => item.name == currentTab));
   }, [currentTab]);
+
+  useEffect(() => {
+    console.log("task obj");
+    console.log(taskObj);
+  }, [taskObj]);
   return (
     <>
       <div className="grid gap-4 mt-5">

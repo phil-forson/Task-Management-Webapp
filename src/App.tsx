@@ -5,7 +5,7 @@ import Nav from "./components/Nav/Nav";
 import Sidebar from "./components/Sidebar/Sidebar";
 import { ColumnsContext } from "./contexts/ColumnsContext";
 import { ThemeContext } from "./contexts/ThemeContext";
-import data from "./data.json";
+import axios from 'axios'
 
 function App() {
   const [showSidebar, setShowSidebar] = useState<boolean>(true);
@@ -14,6 +14,8 @@ function App() {
   const [boardsList, setBoardsList] = useState<Array<any>>([]);
   const [theme, setTheme] = useState(localStorage.getItem("theme"));
   const [boardModalOpen, setBoardModalOpen] = useState(false);
+  const [data, setData] = useState<any>([])
+
 
   const openBoardModal = () => {
     setBoardModalOpen(true);
@@ -24,28 +26,51 @@ function App() {
   };
 
   const findBoard = () => {
-    const board = data.boards.find((board: any) => board.name == currentTab);
+    const board = data?.find((board: any) => board.name == currentTab);
     return board;
   };
 
   const findColumns = () => {
     const board = findBoard();
     const arr: Array<any> = [];
-    board?.columns.map((column) => {
+    board?.columns.map((column: any) => {
       arr.push(column.name);
     });
     setColumnList(arr);
   };
 
+  const getBoards = () => {
+    axios.get('http://localhost:3000/boards').then((res) => {
+      if(res.status == 200){
+
+        setData(res.data)
+        console.log(res.data)
+      }
+    })
+  }
+
   useEffect(() => {
-    if (data.boards) {
-      setCurrentTab(data.boards[0].name);
-      for (let i = 0; i < data.boards.length; i++) {
-        setBoardsList((prevBoards) => [...prevBoards, data.boards[i].name]);
+    console.log(data)
+    console.log('data')
+  }, [data])
+
+  useEffect(() => {
+    getBoards()
+    console.log(data)
+    if (data) {
+      setCurrentTab(data[0]?.name);
+      console.log(currentTab)
+      console.log('current tab')
+      for (let i = 0; i < data.length; i++) {
+        setBoardsList((prevBoards) => [...prevBoards, data[i].name]);
       }
       console.log(currentTab)
     } else {
+      console.log('no boards')
       setCurrentTab("No Boards Created");
+    }
+    if (!!localStorage.getItem("theme")) {
+      localStorage.setItem("theme",  "light");
     }
     console.log('get theme')
     console.log(!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
@@ -58,10 +83,8 @@ function App() {
   }, [currentTab]);
 
   useEffect(() => {
-    if (!!localStorage.getItem("theme")) {
-      localStorage.setItem("theme", theme || "light");
-    }
-    if (localStorage.getItem("theme") == "dark"|| ( window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+ 
+    if (localStorage.getItem("theme") == "dark" ) {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");

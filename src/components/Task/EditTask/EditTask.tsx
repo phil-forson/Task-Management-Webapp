@@ -22,7 +22,7 @@ const EditTask = ({ task, handleCloseModal }: EditTaskProps) => {
     status: task.status,
   });
 
-  const [emptySubtaskIds, setEmptySubtaskIds] = useState<Array<number>>([])
+  const [emptySubtaskIds, setEmptySubtaskIds] = useState<Array<number>>([]);
 
   const [titleError, setTitleError] = useState<boolean>(false);
   const [subtaskError, setSubtaskError] = useState<boolean>(false);
@@ -56,10 +56,10 @@ const EditTask = ({ task, handleCloseModal }: EditTaskProps) => {
   };
 
   const onSelectChange = (item: any) => {
-    let data: any = {...inputFields}
-    data.status = item
-    setInputFields(data)
-  }
+    let data: any = { ...inputFields };
+    data.status = item;
+    setInputFields(data);
+  };
 
   const AddSubtaskFields = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -78,7 +78,7 @@ const EditTask = ({ task, handleCloseModal }: EditTaskProps) => {
 
     for (let i = 0; i < inputFields.subtasks.length; i++) {
       if (inputFields.subtasks[i].title == "") {
-        setEmptySubtaskIds(prevIds => [...prevIds, i])
+        setEmptySubtaskIds((prevIds) => [...prevIds, i]);
       }
     }
 
@@ -170,8 +170,7 @@ const EditTask = ({ task, handleCloseModal }: EditTaskProps) => {
               (subtaskError && "text-mainRed")
             }
           >
-            Subtasks
-            {subtaskError ? " Error !!" : <sup className="text-mainRed">*</sup>}
+            Subtasks<sup className="text-mainRed">*</sup>
           </label>
           <div className="relative">
             {inputFields.subtasks.map((item: any, index: number) => (
@@ -183,6 +182,7 @@ const EditTask = ({ task, handleCloseModal }: EditTaskProps) => {
                 name="title"
                 key={index}
                 emptySubfieldIds={emptySubtaskIds}
+                placeholder={"eg. Code"}
               />
             ))}
             {subtaskError && (
@@ -222,10 +222,10 @@ const EditTask = ({ task, handleCloseModal }: EditTaskProps) => {
             ))}
           </select> */}
           <Dropdown
-              value={inputFields.status}
-              dropdownList={columnsList}
-              onSelectChange={onSelectChange}
-            />
+            value={inputFields.status}
+            dropdownList={columnsList}
+            onSelectChange={onSelectChange}
+          />
         </div>
 
         <div className="h-[40px] mt-5">

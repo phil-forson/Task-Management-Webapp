@@ -1,21 +1,22 @@
 import React, { useContext, useState } from "react";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import data from "../../data.json";
 import Boardtab from "../Board/BoardTab/Boardtab";
 import Switch from "../Switch/Switch";
 
 export type SidebarModalProps = {
   closeModal: () => void;
   currentTab: string;
-  setCurrentTab: React.Dispatch<React.SetStateAction<string>>;
+  setCurrentTabId: React.Dispatch<React.SetStateAction<number>>;
   openBoardModal: () => void;
+  data: any
 };
 
 const SidebarModal = ({
   closeModal,
   currentTab,
-  setCurrentTab,
+  setCurrentTabId,
   openBoardModal,
+  data
 }: SidebarModalProps) => {
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("theme") === "dark"
@@ -31,7 +32,7 @@ const SidebarModal = ({
     } else {
       setTheme("light");
       console.log('setting to light')
-      localStorage.setItem("theme", "light");
+      localStorage.setItem("theme", "dark");
     }
   };
 
@@ -43,12 +44,13 @@ const SidebarModal = ({
         </div>
       </div>
       <div className="mr-5 mt-3 pr-2 ">
-        {data.boards.map((item, index) => (
+        {data.map((item: any, index: number) => (
           <Boardtab
             name={item.name}
             key={index}
+            id={item.id}
             currentTab={currentTab}
-            setCurrentTab={setCurrentTab}
+            setCurrentTabId={setCurrentTabId}
           />
         ))}
         <div className="h-[48px] ">

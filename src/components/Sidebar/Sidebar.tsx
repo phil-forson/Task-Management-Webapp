@@ -16,7 +16,8 @@ const Sidebar = ({
   boardModalOpen,
   openBoardModal,
   closeBoardModal,
-  data
+  data,
+  setCurrentTabId
 }: SidebarProps) => {
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("theme") === "dark"
@@ -51,10 +52,11 @@ const Sidebar = ({
             </div>
             {data.map((item: any, index: number) => (
               <Boardtab
+              id={item.id}
                 name={item.name}
                 key={index}
                 currentTab={currentTab}
-                setCurrentTab={setCurrentTab}
+                setCurrentTabId={setCurrentTabId}
               />
             ))}
             <div className="h-[48px] ">

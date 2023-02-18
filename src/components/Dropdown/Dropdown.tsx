@@ -4,7 +4,8 @@ import "./Dropdown.css";
 
 type DropdownProps = {
   value: any;
-  dropdownList: Array<any>;
+  dropdownList?: Array<any>;
+  dropdownListObject?: Array<any>;
   onSelectChange: (item: any) => void;
   addBorder?: boolean;
   position?: string;
@@ -16,6 +17,7 @@ const Dropdown = ({
   onSelectChange,
   addBorder = true,
   position,
+  dropdownListObject
 }: DropdownProps) => {
   const [selected, setSelected] = useState(value);
   const [isOpen, setIsOpen] = useState(false);
@@ -85,7 +87,7 @@ const Dropdown = ({
             (position && position)
           }
         >
-          {dropdownList.map((item: any, index: number) => (
+          {dropdownList && dropdownList.map((item: any, index: number) => (
             <div
               className={
                 "dropdown-item cursor-pointer select-none hover:bg-lightPurpleHover "
@@ -96,6 +98,17 @@ const Dropdown = ({
               {item}
             </div>
           ))}
+          {dropdownListObject && dropdownListObject.map((item: any, index: number) => (
+            <div
+              className={
+                "dropdown-item cursor-pointer select-none hover:bg-lightPurpleHover "
+              }
+              onClick={() => handleSelect(item.id)}
+              key={index}
+            >
+              {item.name}
+            </div>
+          )) }
         </motion.div>
       )}
     </div>

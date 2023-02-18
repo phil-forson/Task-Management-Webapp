@@ -6,7 +6,7 @@ export type NavProps = {
   currentTab: string;
   openModal: () => void;
   showSidebar: boolean;
-  setCurrentTab: React.Dispatch<React.SetStateAction<string>>;
+  setCurrentTabId: React.Dispatch<React.SetStateAction<number>>;
   data: any;
   openBoardModal: () => void;
   closeBoardModal: () => void;
@@ -21,6 +21,7 @@ export type SidebarProps = {
   openBoardModal: () => void;
   closeBoardModal: () => void;
   data: any
+  setCurrentTabId: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export type BoardProps = {
@@ -49,7 +50,8 @@ export type ButtonProps = {
 export type BoardtabProps = {
   name: string;
   currentTab: string;
-  setCurrentTab: React.Dispatch<React.SetStateAction<string>>;
+  setCurrentTabId: React.Dispatch<React.SetStateAction<number>>;
+  id: number
 };
 
 export type TaskProps = {

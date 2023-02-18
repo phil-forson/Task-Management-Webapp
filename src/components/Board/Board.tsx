@@ -21,19 +21,26 @@ const Board = ({
 
   return (
     <BoardContext.Provider value={currentTab}>
-      <div
-        className=" p-4 bg-lightGrey min-h-screen max-h-[100vh] dark:bg-veryDarkGrey flex-1 overflow-auto "
-        style={{ gridColumn: 2, gridRow: 2 }}
-      >
-        {/* <Emptyboard columnsList={columnsList}/> */}
-        <Task currentTab={currentTab} data={data} addColumn={open} />
-        {!showSidebar && <Showsidebar setShowSidebar={setShowSidebar} />}
-      </div>
-      {openEditBoard && (
-        <Modal
-          handleClose={close}
-          component={<EditBoard closeModal={close} currentTab={currentTab} />}
-        />
+      {data ? (
+        <>
+          <div
+            className=" p-4 bg-lightGrey min-h-screen max-h-[100vh] dark:bg-veryDarkGrey flex-1 overflow-auto "
+            style={{ gridColumn: 2, gridRow: 2 }}
+          >
+            <Task currentTab={currentTab} data={data} addColumn={open} />
+            {!showSidebar && <Showsidebar setShowSidebar={setShowSidebar} />}
+          </div>
+          {openEditBoard && (
+            <Modal
+              handleClose={close}
+              component={
+                <EditBoard closeModal={close} currentTab={currentTab} />
+              }
+            />
+          )}
+        </>
+      ) : (
+        <Emptyboard />
       )}
     </BoardContext.Provider>
   );

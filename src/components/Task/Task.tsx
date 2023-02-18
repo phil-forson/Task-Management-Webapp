@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BoardContext } from "../../contexts/BoardContext";
+import { CurrentBoardContext } from "../../contexts/CurrentBoardContext";
 import { TaskProps } from "../../types";
 import AddColumnTab from "../Column/AddColumnTab/AddColumnTab";
 import AddTask from "./AddTask/AddTask";
@@ -8,9 +9,11 @@ import TaskItem from "./TaskItem/TaskItem";
 const Task = ({ currentTab, data, addColumn }: TaskProps) => {
   const [taskObj, setTaskObj] = useState<any>({});
 
+  const currentTabId = useContext(CurrentBoardContext)
+
   useEffect(() => {
-    setTaskObj(data.find((item: any) => item.name == currentTab));
-  }, [currentTab]);
+    setTaskObj(data.find((item: any) => item.id == currentTabId));
+  }, [currentTabId]);
 
   useEffect(() => {
     console.log("task obj");

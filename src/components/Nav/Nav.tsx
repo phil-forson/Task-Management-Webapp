@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { ColumnsContext } from "../../contexts/ColumnsContext";
 import { NavProps } from "../../types";
@@ -14,7 +14,7 @@ import AddTask from "../Task/AddTask/AddTask";
 const Nav = ({
   currentTab,
   showSidebar,
-  setCurrentTab,
+  setCurrentTabId,
   data,
   openBoardModal,
   closeBoardModal,
@@ -73,12 +73,16 @@ const Nav = ({
     openBoardModal();
   };
 
-  const onChangeColumn = (item: any) => {
-    setCurrentTab(item);
+  const onChangeColumn = (id: number) => {
+    setCurrentTabId(id);
   };
 
   const columnList = useContext(ColumnsContext);
 
+  useEffect(() => {
+    console.log('current tab from nav')
+    console.log(currentTab)
+  }, [])
   return (
     <>
       <div className="w-full h-[85px] relative">
@@ -129,7 +133,7 @@ const Nav = ({
               </div>
               <div className="relative tablet:hidden font-jakartaBold ">
                 <Dropdown
-                  dropdownList={boardsList}
+                  dropdownListObject={boardsList}
                   value={currentTab}
                   onSelectChange={onChangeColumn}
                   addBorder={false}
@@ -210,7 +214,8 @@ const Nav = ({
             <SidebarModal
               closeModal={closeSidebarModal}
               currentTab={currentTab}
-              setCurrentTab={setCurrentTab}
+              setCurrentTabId={setCurrentTabId}
+              data={data}
               openBoardModal={openBoardFromSidebarModal}
             />
           }

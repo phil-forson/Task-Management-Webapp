@@ -89,8 +89,12 @@ const AddNewBoard = ({ closeModal }: any) => {
       setColumnError(false);
       closeModal();
       console.log(inputFields);
-      console.log(unfilledColumns.length !== 0);
-      console.log("no error");
+      // const request = {
+      //   name: inputFields.name,
+      //   columns: inputFields.columns.map((column: any) => {
+  
+      //   })
+      // }
     }
   };
 

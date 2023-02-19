@@ -329,7 +329,7 @@
                   "title": "Write up research analysis",
                   "isCompleted": true
                 },
-              {
+                {
                   "id": 2,
                   "title": "Calculate TAM",
                   "isCompleted": true
@@ -359,7 +359,7 @@
                   "title": "Find hunter",
                   "isCompleted": false
                 },
-              {
+                {
                   "id": 2,
                   "title": "Gather assets",
                   "isCompleted": false
@@ -513,6 +513,63 @@
           "tasks": []
         }
       ]
+    },
+    {
+      "id": 4,
+      "name": "Web Design",
+      "columns": [
+        {
+          "id": 1,
+          "name": "Today",
+          "tasks": []
+        },
+        {
+          "id": 2,
+          "name": "Tomorrow",
+          "tasks": []
+        }
+      ]
+    },
+    {
+      "name": "Backend",
+      "columns": [
+        {
+          "id": 1,
+          "name": "In one month",
+          "tasks": []
+        },
+        {
+          "id": 2,
+          "name": "In two months",
+          "tasks": []
+        },
+        {
+          "id": 3,
+          "name": "In three months",
+          "tasks": []
+        }
+      ],
+      "id": 5
+    },
+    {
+      "name": "UX Design",
+      "columns": [
+        {
+          "id": 1,
+          "name": "Today",
+          "tasks": []
+        },
+        {
+          "id": 2,
+          "name": "Tomorrow",
+          "tasks": []
+        },
+        {
+          "name": "In two weeks",
+          "tasks": []
+        }
+      ],
+      "id": 6
     }
   ]
 }

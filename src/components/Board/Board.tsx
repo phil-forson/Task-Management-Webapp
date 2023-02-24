@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BoardContext } from "../../contexts/BoardContext";
 import { BoardProps } from "../../types";
 import Modal from "../Modal/Modal";
@@ -19,6 +19,13 @@ const Board = ({
 
   const close = () => setOpenEditBoard(false);
 
+  const { setData } = useContext(BoardContext)
+
+  useEffect(() => {
+    console.log('data from board component')
+    console.log(data)
+  }, [])
+
   return (
     <BoardContext.Provider value={currentTab}>
       {data ? (
@@ -34,7 +41,7 @@ const Board = ({
             <Modal
               handleClose={close}
               component={
-                <EditBoard closeModal={close} currentTab={currentTab} />
+                <EditBoard closeModal={close} currentTab={currentTab} addColumn={true} />
               }
             />
           )}

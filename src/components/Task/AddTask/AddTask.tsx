@@ -3,11 +3,13 @@ import { ColumnsContext } from "../../../contexts/ColumnsContext";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import { AddTaskProps, IAddTask } from "../../../types";
 import Button from "../../Button/Button";
+import LightPurpleButton from "../../Button/LightPurpleButton/LightPurpleButton";
 import Dropdown from "../../Dropdown/Dropdown";
 import Subfield from "../../Subfield/Subfield";
 import "./AddTask.css";
 
 const AddTask = ({ handleCloseModal }: AddTaskProps) => {
+  const columnsList = useContext(ColumnsContext);
   const [inputFields, setInputFields] = useState<IAddTask>({
     title: "",
     description: "",
@@ -16,7 +18,7 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
         title: "",
       },
     ],
-    status: "Todo",
+    status: columnsList[0],
   });
   const [emptySubtaskIds, setEmptySubtaskIds] = useState<Array<number>>([])
 
@@ -24,7 +26,6 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
   const [titleError, setTitleError] = useState<boolean>(false);
   const [subtaskError, setSubtaskError] = useState<boolean>(false);
 
-  const columnsList = useContext(ColumnsContext);
 
   const deleteSubtaskField = (index: any) => {
     if (index !== 0) {
@@ -188,7 +189,7 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
             )}
           </div>
           <div className="h-[40px]">
-            <Button
+            <LightPurpleButton
               onClick={(e) => AddSubtaskFields(e)}
               text="Add New Subtask"
               color="mainPurple"

@@ -6,9 +6,6 @@ import Modal from "../Modal/Modal";
 import AddNewBoard from "../Board/AddNewBoard/AddNewBoard";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
-
-
-
 const Sidebar = ({
   setShowSidebar,
   currentTab,
@@ -17,7 +14,7 @@ const Sidebar = ({
   openBoardModal,
   closeBoardModal,
   data,
-  setCurrentTabId
+  setCurrentTabId,
 }: SidebarProps) => {
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("theme") === "dark"
@@ -39,27 +36,22 @@ const Sidebar = ({
 
   return (
     <>
-      <div
-        className="relative laptop:w-[300px] laptop:min-w-[300px] tablet:min-w-[261px] tablet:max-w-[261px] h-[100vh] mobile:hidden tablet:block "
-      >
-        <div
-          className="laptop:max-w-[300px] laptop:min-w-[300px] tablet:max-w-[261px] tablet:min-w-[261px] fixed left-0 top-[85px] border-r-[1px] border-lightGrey dark:border-darkLines h-[100vh] dark:bg-darkGrey text-mediumGrey z-10 bg-white"
-          style={{ gridColumn: 1 }}
-        >
-          <div className="mr-5 pt-3">
+      <div className="relative laptop:w-[300px] laptop:min-w-[300px] tablet:min-w-[261px] tablet:max-w-[261px] max-h-full h-auto mobile:hidden tablet:block ">
+        <div className="laptop:max-w-[300px] laptop:min-w-[300px] tablet:max-w-[261px] tablet:min-w-[261px] fixed left-0 top-[85px] border-r-[1px] border-lightGrey dark:border-darkLines max-h-full overflow-scroll dark:bg-darkGrey text-mediumGrey z-10 bg-white">
+          <div className="mr-5 pt-3 mb-12">
             <div className="font-jakartaBold uppercase text-[12px]  ml-8 tracking-widest h-[48px]">
               All boards ( 3 )
             </div>
             {data.map((item: any, index: number) => (
               <Boardtab
-              id={item.id}
+                id={item.id}
                 name={item.name}
                 key={index}
                 currentTab={currentTab}
                 setCurrentTabId={setCurrentTabId}
               />
             ))}
-            <div className="h-[48px] ">
+            <div className="h-[48px] mb-12">
               <div className="flex ml-8 items-center h-full">
                 <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -87,7 +79,7 @@ const Sidebar = ({
                 </div>
               </div>
             </div>
-            <div className="mt-64 ml-8">
+            <div className="ml-8 mb-5">
               <div className="h-[48px] bg-lightGrey dark:bg-veryDarkGrey">
                 <div className="flex h-full items-center justify-evenly mx-10">
                   <svg

@@ -1,6 +1,9 @@
+import axios from "axios";
 import React, { useCallback, useContext, useState } from "react";
+import { BoardContext } from "../../../contexts/BoardContext";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import Button from "../../Button/Button";
+import LightPurpleButton from "../../Button/LightPurpleButton/LightPurpleButton";
 import Subfield from "../../Subfield/Subfield";
 
 const AddNewBoard = ({ closeModal }: any) => {
@@ -16,7 +19,9 @@ const AddNewBoard = ({ closeModal }: any) => {
     ],
   });
 
-  const [emptyColumnIds, setEmptyColumnIds] = useState<Array<number>>([])
+  const { data, setData } = useContext(BoardContext);
+
+  const [emptyColumnIds, setEmptyColumnIds] = useState<Array<number>>([]);
 
   const [nameError, setNameError] = useState<boolean>(false);
   const [columnError, setColumnError] = useState<boolean>(false);
@@ -56,6 +61,18 @@ const AddNewBoard = ({ closeModal }: any) => {
     });
   };
 
+  const addBoard = (reqObj: any) => {
+    const backendUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
+    axios.post(backendUrl, reqObj).then((res: any) => {
+      console.log(res);
+      if (res.status === 201) {
+        closeModal();
+        console.log(data);
+        setData([...data, reqObj]);
+      }
+    });
+  };
+
   const createBoard = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const unfilledColumns = inputFields.columns.filter(
@@ -64,7 +81,7 @@ const AddNewBoard = ({ closeModal }: any) => {
 
     for (let i = 0; i < inputFields.columns.length; i++) {
       if (inputFields.columns[i].column == "") {
-        setEmptyColumnIds(prevIds => [...prevIds, i])
+        setEmptyColumnIds((prevIds) => [...prevIds, i]);
       }
     }
 
@@ -87,14 +104,25 @@ const AddNewBoard = ({ closeModal }: any) => {
     } else {
       setNameError(false);
       setColumnError(false);
-      closeModal();
+
       console.log(inputFields);
-      // const request = {
-      //   name: inputFields.name,
-      //   columns: inputFields.columns.map((column: any) => {
-  
-      //   })
-      // }
+      const request = {
+        id: data[data.length - 1].id + 1,
+        name: inputFields.name,
+        columns: inputFields.columns.map((columnObj: any, index: number) => {
+          return {
+            id: index + 1,
+            name: columnObj.column,
+            tasks: [],
+          };
+        }),
+      };
+
+      console.log("id");
+      console.log(data[data.length - 1].id + 1);
+
+      console.log(request);
+      addBoard(request);
     }
   };
 
@@ -139,7 +167,6 @@ const AddNewBoard = ({ closeModal }: any) => {
           }
         >
           Columns<sup className="text-mainRed">*</sup>
-        
         </label>
         <div className="relative">
           {inputFields.columns.map((item: any, index) => (
@@ -155,17 +182,16 @@ const AddNewBoard = ({ closeModal }: any) => {
           ))}
           {columnError && (
             <div className="text-mainRed text-[13px] float-right mb-3 font-jakartaBold">
-              Please fill empty column field{emptyColumnIds.length > 1 && <span>s</span>}
+              Please fill empty column field
+              {emptyColumnIds.length > 1 && <span>s</span>}
             </div>
           )}
         </div>
         <div className="h-[40px]">
-          <Button
+          <LightPurpleButton
             onClick={(e) => addSubfield(e)}
             text="Add New Column"
             color="mainPurple"
-            primary={theme === "light" ? "lightPurple" : "white"}
-            hoverColor={theme === "light" ? "lightPurpleHover" : "white"}
           />
         </div>
       </div>

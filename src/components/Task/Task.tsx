@@ -13,7 +13,7 @@ const Task = ({ currentTab, data, addColumn }: TaskProps) => {
 
   useEffect(() => {
     setTaskObj(data.find((item: any) => item.id == currentTabId));
-  }, [currentTabId]);
+  }, [currentTabId,data]);
 
   useEffect(() => {
     console.log("task obj");

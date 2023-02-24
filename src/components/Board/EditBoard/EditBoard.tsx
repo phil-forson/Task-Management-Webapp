@@ -1,6 +1,9 @@
+import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import { AllBoardsContext } from "../../../contexts/AllBoardsContext";
 import { BoardContext } from "../../../contexts/BoardContext";
 import { ColumnsContext } from "../../../contexts/ColumnsContext";
+import { CurrentBoardContext } from "../../../contexts/CurrentBoardContext";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import Button from "../../Button/Button";
 import Subfield from "../../Subfield/Subfield";
@@ -8,10 +11,31 @@ import Subfield from "../../Subfield/Subfield";
 export type EditBoardProps = {
   closeModal: () => void;
   currentTab: string;
+  addColumn?: boolean;
 };
 
-const EditBoard = ({ closeModal, currentTab }: EditBoardProps) => {
+const EditBoard = ({
+  closeModal,
+  currentTab,
+  addColumn = false,
+}: EditBoardProps) => {
   const columnsList = useContext(ColumnsContext);
+
+  const currentTabId = useContext(CurrentBoardContext);
+
+  const { data, setData } = useContext(AllBoardsContext);
+
+  useEffect(() => {
+    console.log("data from use effect");
+    console.log(data);
+    if (addColumn) {
+      const newField = { column: "" };
+      setInputFields({
+        ...inputFields,
+        columns: [...inputFields.columns, newField],
+      });
+    }
+  }, []);
 
   const [inputFields, setInputFields] = useState({
     name: currentTab,
@@ -22,7 +46,7 @@ const EditBoard = ({ closeModal, currentTab }: EditBoardProps) => {
     }),
   });
 
-  const [emptyColumnIds, setEmptyColumnIds] = useState<Array<number>>([])
+  const [emptyColumnIds, setEmptyColumnIds] = useState<Array<number>>([]);
 
   const [nameError, setNameError] = useState<boolean>(false);
   const [columnError, setColumnError] = useState<boolean>(false);
@@ -58,15 +82,34 @@ const EditBoard = ({ closeModal, currentTab }: EditBoardProps) => {
     });
   };
 
+  const editBoard = (reqObj: any) => {
+    const backendUrl =
+      import.meta.env.VITE_REACT_APP_BASE_URL + "/" + currentTabId;
+    console.log(backendUrl);
+    axios.patch(backendUrl, reqObj).then((res) => {
+      if (res.status === 200) {
+        // closeModal();
+        console.log("data");
+        console.log(data);
+        const newArr = data.map((board: any) =>
+          board.id === currentTabId ? { ...board, ...reqObj } : board
+        );
+        console.log("newArr");
+        console.log(newArr);
+        setData(newArr);
+      }
+    });
+  };
+
   const saveChanges = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
+    e.preventDefault();
     const unfilledColumns = inputFields.columns.filter(
       (column: any) => column.column === ""
     );
 
     for (let i = 0; i < inputFields.columns.length; i++) {
       if (inputFields.columns[i].column == "") {
-        setEmptyColumnIds(prevIds => [...prevIds, i])
+        setEmptyColumnIds((prevIds) => [...prevIds, i]);
       }
     }
 
@@ -89,10 +132,15 @@ const EditBoard = ({ closeModal, currentTab }: EditBoardProps) => {
     } else {
       setNameError(false);
       setColumnError(false);
-      closeModal();
-      console.log(inputFields);
-      console.log(unfilledColumns.length !== 0);
-      console.log("no error");
+
+      const request = {
+        name: inputFields.name,
+        columns: inputFields.columns.map((columnArr: any, index: number) => {
+          return { id: index + 1, name: columnArr.column, tasks: [] };
+        }),
+      };
+      console.log(request);
+      editBoard(request);
     }
   };
 
@@ -108,9 +156,12 @@ const EditBoard = ({ closeModal, currentTab }: EditBoardProps) => {
       <div className="mt-3 flex flex-col">
         <label
           htmlFor="name"
-          className={"font-jakartaBold text-mediumGrey text-[12px] w-full " + (nameError && "text-mainRed")}
+          className={
+            "font-jakartaBold text-mediumGrey text-[12px] w-full " +
+            (nameError && "text-mainRed")
+          }
         >
-         Board Name<sup className="text-mainRed">*</sup>
+          Board Name<sup className="text-mainRed">*</sup>
         </label>
         <div className="relative">
           <input
@@ -131,7 +182,7 @@ const EditBoard = ({ closeModal, currentTab }: EditBoardProps) => {
         </div>
       </div>
       <div className="mt-3 flex flex-col">
-      <label
+        <label
           className={
             "font-jakartaBold text-mediumGrey text-[12px] w-full " +
             (columnError && "text-mainRed")
@@ -154,10 +205,11 @@ const EditBoard = ({ closeModal, currentTab }: EditBoardProps) => {
           ))}
           {columnError && (
             <div className="text-mainRed text-[13px] float-right mb-3 font-jakartaBold">
-             Please fill empty column field{emptyColumnIds.length > 1 && <span>s</span>}
+              Please fill empty column field
+              {emptyColumnIds.length > 1 && <span>s</span>}
             </div>
           )}
-          </div>
+        </div>
         <div className="h-[40px] mt-2">
           <Button
             onClick={(e) => addSubfield(e)}
@@ -169,7 +221,11 @@ const EditBoard = ({ closeModal, currentTab }: EditBoardProps) => {
         </div>
       </div>
       <div className="mt-5 h-[40px]">
-        <Button text="Save Changes" icon={false} onClick={(e) => saveChanges(e)} />
+        <Button
+          text="Save Changes"
+          icon={false}
+          onClick={(e) => saveChanges(e)}
+        />
       </div>
     </form>
   );

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import React from "react";
 import "./App.css";
 import Board from "./components/Board/Board";
 import Nav from "./components/Nav/Nav";
@@ -7,6 +8,8 @@ import { ColumnsContext } from "./contexts/ColumnsContext";
 import { ThemeContext } from "./contexts/ThemeContext";
 import axios from "axios";
 import { CurrentBoardContext } from "./contexts/CurrentBoardContext";
+import { BoardContext } from "./contexts/BoardContext";
+import { AllBoardsContext } from "./contexts/AllBoardsContext";
 
 function App() {
   const [showSidebar, setShowSidebar] = useState<boolean>(true);
@@ -42,8 +45,9 @@ function App() {
   };
 
   const getBoards = async () => {
+    const backendUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
     setIsLoadingBoards(true);
-    await axios.get("http://localhost:3000/boards").then((res) => {
+    await axios.get(backendUrl).then((res) => {
       setIsLoadingBoards(false);
       if (res.status == 200) {
         setData(res.data);
@@ -54,24 +58,28 @@ function App() {
           console.log(currentBoard);
           setCurrentTab(currentBoard.name);
           console.log("current tab");
-          const boardObjList = []
+          const boardObjList = [];
           for (let i = 0; i < res.data.length; i++) {
-            const key = res.data[i]?.id
-            const value = res.data[i]?.name
-            const obj = { id: key, name: value}
-            boardObjList.push(obj)
+            const key = res.data[i]?.id;
+            const value = res.data[i]?.name;
+            const obj = { id: key, name: value };
+            boardObjList.push(obj);
             setBoardsList(boardObjList);
           }
-          console.log('board obj list')
-          console.log(boardObjList)
+          console.log("board obj list");
+          console.log(boardObjList);
         }
       }
     });
   };
 
   useEffect(() => {
+    console.log("data from app.tsx");
     console.log(data);
-    console.log("data");
+    const currentBoard = data.find((board: any) => board.id === currentTabId);
+    console.log("current board from use effect");
+    console.log(currentBoard);
+    setCurrentTab(currentBoard?.name);
   }, [data]);
 
   useEffect(() => {
@@ -120,46 +128,48 @@ function App() {
   const themeElements = { theme, setTheme };
 
   return (
-    <ColumnsContext.Provider value={columnList}>
-      <ThemeContext.Provider value={themeElements}>
-        <CurrentBoardContext.Provider value={currentTabId}>
-          <div className=" dark:bg-darkGrey">
-            <Nav
-              currentTab={currentTab}
-              openModal={open}
-              showSidebar={showSidebar}
-              setCurrentTabId={setCurrentTabId}
-              data={data}
-              openBoardModal={openBoardModal}
-              closeBoardModal={closeBoardModal}
-              boardsList={boardsList}
-            />
-            <div className="flex">
-              {showSidebar && (
-                <Sidebar
-                  data={data}
+    <AllBoardsContext.Provider value={{ data, setData }}>
+      <ColumnsContext.Provider value={columnList}>
+        <ThemeContext.Provider value={themeElements}>
+          <CurrentBoardContext.Provider value={currentTabId}>
+            <div className=" dark:bg-darkGrey">
+              <Nav
+                currentTab={currentTab}
+                openModal={open}
+                showSidebar={showSidebar}
+                setCurrentTabId={setCurrentTabId}
+                data={data}
+                openBoardModal={openBoardModal}
+                closeBoardModal={closeBoardModal}
+                boardsList={boardsList}
+              />
+              <div className="flex">
+                {showSidebar && (
+                  <Sidebar
+                    data={data}
+                    setShowSidebar={setShowSidebar}
+                    currentTab={currentTab}
+                    setCurrentTab={setCurrentTab}
+                    boardModalOpen={boardModalOpen}
+                    openBoardModal={openBoardModal}
+                    closeBoardModal={closeBoardModal}
+                    setCurrentTabId={setCurrentTabId}
+                  />
+                )}
+                <Board
+                  showSidebar={showSidebar}
                   setShowSidebar={setShowSidebar}
                   currentTab={currentTab}
-                  setCurrentTab={setCurrentTab}
-                  boardModalOpen={boardModalOpen}
-                  openBoardModal={openBoardModal}
-                  closeBoardModal={closeBoardModal}
-                  setCurrentTabId={setCurrentTabId}
+                  data={data}
+                  columnsList={columnList}
                 />
-              )}
-              <Board
-                showSidebar={showSidebar}
-                setShowSidebar={setShowSidebar}
-                currentTab={currentTab}
-                data={data}
-                columnsList={columnList}
-              />
+              </div>
+              {/* {modalOpen && <Modal handleClose={close} text="Hello world" />} */}
             </div>
-            {/* {modalOpen && <Modal handleClose={close} text="Hello world" />} */}
-          </div>
-        </CurrentBoardContext.Provider>
-      </ThemeContext.Provider>
-    </ColumnsContext.Provider>
+          </CurrentBoardContext.Provider>
+        </ThemeContext.Provider>
+      </ColumnsContext.Provider>
+    </AllBoardsContext.Provider>
   );
 }
 

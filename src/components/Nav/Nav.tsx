@@ -1,6 +1,9 @@
+import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import { AllBoardsContext } from "../../contexts/AllBoardsContext";
 
 import { ColumnsContext } from "../../contexts/ColumnsContext";
+import { CurrentBoardContext } from "../../contexts/CurrentBoardContext";
 import { NavProps } from "../../types";
 import EditBoard from "../Board/EditBoard/EditBoard";
 import Button from "../Button/Button";
@@ -25,6 +28,10 @@ const Nav = ({
   const [editBoardOpen, setEditBoardOpen] = useState(false);
   const [deleteBoardOpen, setDeleteBoardOpen] = useState(false);
   const [sidebarModalOpen, setSidebarModalOpen] = useState(false);
+
+  const currentTabId = useContext(CurrentBoardContext);
+
+  const { setData } = useContext(AllBoardsContext);
 
   const open = () => setOpenAddTask(true);
 
@@ -55,7 +62,17 @@ const Nav = ({
 
   const handleDeleteBoard = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    const backendUrl =
+      import.meta.env.VITE_REACT_APP_BASE_URL + "/" + currentTabId;
     console.log(currentTab, "deleted");
+    axios.delete(backendUrl).then((res) => {
+      console.log(res);
+      if (res.status === 200) {
+        const newArr = data.filter((board: any) => board.id !== currentTabId);
+        setData(newArr);
+        setCurrentTabId(currentTabId - 1);
+      }
+    });
     onCloseDeleteBoard();
   };
 
@@ -80,9 +97,9 @@ const Nav = ({
   const columnList = useContext(ColumnsContext);
 
   useEffect(() => {
-    console.log('current tab from nav')
-    console.log(currentTab)
-  }, [])
+    console.log("current tab from nav");
+    console.log(currentTab);
+  }, []);
   return (
     <>
       <div className="w-full h-[85px] relative">

@@ -14,12 +14,19 @@ const Button = ({
   onlyIcon
 }: ButtonProps) => {
 
+  const getButtonBg = (color: string) => {
+    const bg = ''
+    if(color === '#635FC71A'){
+
+    }
+  }
+
   return (
     <button
       className={
         "  rounded-[24px] h-full outline-none border-none " +
         (color ? `text-${color} ` : "text-white ") +
-        (primary ? primary : " bg-mainPurple") +
+        (primary ? `bg-[${primary}]` : " bg-mainPurple") +
         (hoverColor ? `hover:bg-${hoverColor} ` : "hover:bg-mainPurpleHover ") + ( onlyIcon ? ' mobile:w-[54px] tablet:w-full ': ' w-full ')
       }
       onClick={onClick}

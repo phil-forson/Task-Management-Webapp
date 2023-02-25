@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useCallback, useContext, useState } from "react";
+import { AllBoardsContext } from "../../../contexts/AllBoardsContext";
 import { BoardContext } from "../../../contexts/BoardContext";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import Button from "../../Button/Button";
@@ -19,7 +20,7 @@ const AddNewBoard = ({ closeModal }: any) => {
     ],
   });
 
-  const { data, setData } = useContext(BoardContext);
+  const { data, setData } = useContext(AllBoardsContext);
 
   const [emptyColumnIds, setEmptyColumnIds] = useState<Array<number>>([]);
 

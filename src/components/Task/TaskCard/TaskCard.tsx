@@ -1,4 +1,7 @@
-import { useState } from "react";
+import axios from "axios";
+import { useContext, useState } from "react";
+import { AllBoardsContext } from "../../../contexts/AllBoardsContext";
+import { CurrentBoardContext } from "../../../contexts/CurrentBoardContext";
 import { TaskCardProps } from "../../../types";
 import Delete from "../../DeleteItem/Delete";
 import Modal from "../../Modal/Modal";
@@ -14,12 +17,11 @@ const TaskCard = ({
   description,
   subtasks,
   status,
-  columnId
+  columnId,
 }: TaskCardProps) => {
-
   const [viewTaskDetails, setViewTaskDetails] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false)
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const openTaskDetails = () => {
     setViewTaskDetails(true);
@@ -29,24 +31,49 @@ const TaskCard = ({
     setViewTaskDetails(false);
   };
 
-  const openDeleteModal = () => setDeleteModalOpen(true)
+  const { data, setData } = useContext(AllBoardsContext);
 
-  const closeDeleteModal = () => setDeleteModalOpen(false)
+  const currentTabId = useContext(CurrentBoardContext);
+
+  const openDeleteModal = () => setDeleteModalOpen(true);
+
+  const closeDeleteModal = () => setDeleteModalOpen(false);
 
   const openEditModal = () => setEditModalOpen(true);
 
   const closeEditModal = () => setEditModalOpen(false);
 
+  const deleteTask = (reqObj: any) => {
+    const backendUrl =
+      import.meta.env.VITE_REACT_APP_BASE_URL + "/" + currentTabId;
+    axios.patch(backendUrl, reqObj).then((res) => {
+      if (res.status === 200) {
+        const newArr = data.map((board: any) =>
+          board.id === currentTabId ? { ...board, ...reqObj } : { ...board }
+        );
+        setData(newArr);
+        closeDeleteModal();
+      }
+    });
+  };
+
   const handleDeleteTask = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    console.log( taskTitle ,'deleted')
-    closeDeleteModal()
-  }
+    e.preventDefault();
+    console.log(taskTitle, "deleted");
+    const boardToUpdate = data.find((board: any) => board.id === currentTabId);
+
+    boardToUpdate.columns.find((column: any) => column.id === columnId).tasks =
+      boardToUpdate.columns
+        .find((column: any) => column.id === columnId)
+        .tasks.filter((item: any) => item.id !== task.id);
+    console.log(boardToUpdate);
+    deleteTask(boardToUpdate);
+  };
 
   const handleCancelDeleteTask = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    closeDeleteModal()
-  }
+    e.preventDefault();
+    closeDeleteModal();
+  };
 
   const handleOpenModal = () => {
     if (viewTaskDetails) {
@@ -99,13 +126,15 @@ const TaskCard = ({
       )}
       {deleteModalOpen && (
         <Modal
-        handleClose={closeDeleteModal}
-        component={<Delete 
-          deleteText={`Are you sure you want to delete the ‘ ${taskTitle} ’ task and its subtasks? This action cannot be reversed.`}
-          deleteType="task"
-          handleDelete={handleDeleteTask}
-          handleCancel={handleCancelDeleteTask}
-        />}
+          handleClose={closeDeleteModal}
+          component={
+            <Delete
+              deleteText={`Are you sure you want to delete the ‘ ${taskTitle} ’ task and its subtasks? This action cannot be reversed.`}
+              deleteType="task"
+              handleDelete={handleDeleteTask}
+              handleCancel={handleCancelDeleteTask}
+            />
+          }
         />
       )}
     </>

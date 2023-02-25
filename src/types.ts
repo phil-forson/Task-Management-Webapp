@@ -70,13 +70,13 @@ export type TaskItemProps = {
 
 export type TaskCardProps = {
   status: any;
-  task: {};
+  task: any;
   taskTitle: string;
   completed: number;
   totalNumOfSubtasks: number;
   description: string;
   subtasks: Array<{}>;
-  columnId?: number
+  columnId: number
 };
 
 export type ModalProps = {

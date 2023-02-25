@@ -64,13 +64,17 @@ const Nav = ({
     e.preventDefault();
     const backendUrl =
       import.meta.env.VITE_REACT_APP_BASE_URL + "/" + currentTabId;
+      const currentBoard = data.find((board: any) => board.id === currentTabId)
+    const index = data.indexOf(currentBoard)
+    console.log(index)
     console.log(currentTab, "deleted");
     axios.delete(backendUrl).then((res) => {
       console.log(res);
       if (res.status === 200) {
         const newArr = data.filter((board: any) => board.id !== currentTabId);
         setData(newArr);
-        setCurrentTabId(currentTabId - 1);
+        console.log(index - 1)
+        setCurrentTabId(data[index - 1 ].id);
       }
     });
     onCloseDeleteBoard();

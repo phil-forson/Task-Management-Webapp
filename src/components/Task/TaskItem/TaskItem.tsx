@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import TaskCard from "../TaskCard/TaskCard";
 import "./TaskItem.css";
 
-const TaskItem = ({ name, tasks, tasksLength }: any) => {
+const TaskItem = ({ name, tasks, tasksLength, columnId }: any) => {
   const findCompletedTasks = (task: any) => {
     return task.isCompleted == true;
   };
@@ -33,6 +33,7 @@ const TaskItem = ({ name, tasks, tasksLength }: any) => {
           totalNumOfSubtasks={task.subtasks.length}
           description={task.description}
           subtasks={task.subtasks}
+          columnId={columnId}
           key={i}
         />
       ))}

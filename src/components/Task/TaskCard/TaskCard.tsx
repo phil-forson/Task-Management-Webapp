@@ -14,6 +14,7 @@ const TaskCard = ({
   description,
   subtasks,
   status,
+  columnId
 }: TaskCardProps) => {
 
   const [viewTaskDetails, setViewTaskDetails] = useState(false);
@@ -83,6 +84,7 @@ const TaskCard = ({
                   closeModal={closeTaskDetails}
                   openEditModal={openEditModal}
                   openDeleteModal={openDeleteModal}
+                  columnId={columnId}
                 />
               </>
             }

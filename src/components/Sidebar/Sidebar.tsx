@@ -40,7 +40,7 @@ const Sidebar = ({
         <div className="laptop:max-w-[300px] laptop:min-w-[300px] tablet:max-w-[261px] tablet:min-w-[261px] fixed left-0 top-[85px] border-r-[1px] border-lightGrey dark:border-darkLines max-h-full overflow-scroll dark:bg-darkGrey text-mediumGrey z-10 bg-white">
           <div className="mr-5 pt-3 mb-12">
             <div className="font-jakartaBold uppercase text-[12px]  ml-8 tracking-widest h-[48px]">
-              All boards ( 3 )
+              All boards ( {data.length} )
             </div>
             {data.map((item: any, index: number) => (
               <Boardtab

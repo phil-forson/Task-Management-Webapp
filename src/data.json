@@ -15,34 +15,34 @@
               "status": "Todo",
               "subtasks": [
                 {
-                  "id": 1,
                   "title": "Find hunter",
-                  "isCompleted": false
+                  "isCompleted": true,
+                  "id": 1
                 },
                 {
-                  "id": 2,
                   "title": "Gather assets",
-                  "isCompleted": false
+                  "isCompleted": false,
+                  "id": 2
                 },
                 {
-                  "id": 3,
                   "title": "Draft product page",
-                  "isCompleted": false
+                  "isCompleted": true,
+                  "id": 3
                 },
                 {
-                  "id": 4,
                   "title": "Notify customers",
-                  "isCompleted": false
+                  "isCompleted": true,
+                  "id": 4
                 },
                 {
-                  "id": 5,
                   "title": "Notify network",
-                  "isCompleted": false
+                  "isCompleted": true,
+                  "id": 5
                 },
                 {
-                  "id": 6,
                   "title": "Launch!",
-                  "isCompleted": false
+                  "isCompleted": false,
+                  "id": 6
                 }
               ]
             },
@@ -108,9 +108,34 @@
               "description": "",
               "subtasks": [
                 {
-                  "id": 1,
+                  "title": "Find hunter",
+                  "isCompleted": true,
+                  "id": 1
+                },
+                {
+                  "title": "Gather assets",
                   "isCompleted": false,
-                  "title": "Finishing up my project"
+                  "id": 2
+                },
+                {
+                  "title": "Draft product page",
+                  "isCompleted": true,
+                  "id": 3
+                },
+                {
+                  "title": "Notify customers",
+                  "isCompleted": true,
+                  "id": 4
+                },
+                {
+                  "title": "Notify network",
+                  "isCompleted": true,
+                  "id": 5
+                },
+                {
+                  "title": "Launch!",
+                  "isCompleted": false,
+                  "id": 6
                 }
               ],
               "status": "Doing",
@@ -123,7 +148,257 @@
           "name": "Done",
           "tasks": []
         }
-      ]
+      ],
+      "reqObj": {
+        "id": 2,
+        "name": "Marketing Plan",
+        "columns": [
+          {
+            "id": 1,
+            "name": "Todo",
+            "tasks": [
+              {
+                "id": 1,
+                "title": "Plan Product Hunt launch",
+                "description": "",
+                "status": "Todo",
+                "subtasks": [
+                  {
+                    "title": "Find hunter",
+                    "isCompleted": false,
+                    "id": 1
+                  },
+                  {
+                    "title": "Gather assets",
+                    "isCompleted": false,
+                    "id": 2
+                  },
+                  {
+                    "title": "Draft product page",
+                    "isCompleted": false,
+                    "id": 3
+                  },
+                  {
+                    "title": "Notify customers",
+                    "isCompleted": false,
+                    "id": 4
+                  },
+                  {
+                    "title": "Notify network",
+                    "isCompleted": false,
+                    "id": 5
+                  },
+                  {
+                    "title": "Launch!",
+                    "isCompleted": true,
+                    "id": 6
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "title": "Share on Show HN",
+                "description": "",
+                "status": "",
+                "subtasks": [
+                  {
+                    "id": 1,
+                    "title": "Draft out HN post",
+                    "isCompleted": false
+                  },
+                  {
+                    "id": 2,
+                    "title": "Get feedback and refine",
+                    "isCompleted": false
+                  },
+                  {
+                    "id": 3,
+                    "title": "Publish post",
+                    "isCompleted": false
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "title": "Write launch article to publish on multiple channels",
+                "description": "",
+                "status": "",
+                "subtasks": [
+                  {
+                    "id": 1,
+                    "title": "Write article",
+                    "isCompleted": false
+                  },
+                  {
+                    "id": 2,
+                    "title": "Publish on LinkedIn",
+                    "isCompleted": false
+                  },
+                  {
+                    "id": 3,
+                    "title": "Publish on Inndie Hackers",
+                    "isCompleted": false
+                  },
+                  {
+                    "id": 4,
+                    "title": "Publish on Medium",
+                    "isCompleted": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "name": "Doing",
+            "tasks": [
+              {
+                "title": "Finishing up my project",
+                "description": "",
+                "subtasks": [
+                  {
+                    "title": "Finishing up my project",
+                    "isCompleted": true,
+                    "id": 1
+                  }
+                ],
+                "status": "Doing",
+                "id": 1
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "name": "Done",
+            "tasks": []
+          }
+        ],
+        "reqObj": {
+          "id": 2,
+          "name": "Marketing Plan",
+          "columns": [
+            {
+              "id": 1,
+              "name": "Todo",
+              "tasks": [
+                {
+                  "id": 1,
+                  "title": "Plan Product Hunt launch",
+                  "description": "",
+                  "status": "Todo",
+                  "subtasks": [
+                    {
+                      "title": "Find hunter",
+                      "isCompleted": false,
+                      "id": 1
+                    },
+                    {
+                      "title": "Gather assets",
+                      "isCompleted": false,
+                      "id": 2
+                    },
+                    {
+                      "title": "Draft product page",
+                      "isCompleted": false,
+                      "id": 3
+                    },
+                    {
+                      "title": "Notify customers",
+                      "isCompleted": false,
+                      "id": 4
+                    },
+                    {
+                      "title": "Notify network",
+                      "isCompleted": false,
+                      "id": 5
+                    },
+                    {
+                      "title": "Launch!",
+                      "isCompleted": true,
+                      "id": 6
+                    }
+                  ]
+                },
+                {
+                  "id": 2,
+                  "title": "Share on Show HN",
+                  "description": "",
+                  "status": "",
+                  "subtasks": [
+                    {
+                      "id": 1,
+                      "title": "Draft out HN post",
+                      "isCompleted": false
+                    },
+                    {
+                      "id": 2,
+                      "title": "Get feedback and refine",
+                      "isCompleted": false
+                    },
+                    {
+                      "id": 3,
+                      "title": "Publish post",
+                      "isCompleted": false
+                    }
+                  ]
+                },
+                {
+                  "id": 3,
+                  "title": "Write launch article to publish on multiple channels",
+                  "description": "",
+                  "status": "",
+                  "subtasks": [
+                    {
+                      "id": 1,
+                      "title": "Write article",
+                      "isCompleted": false
+                    },
+                    {
+                      "id": 2,
+                      "title": "Publish on LinkedIn",
+                      "isCompleted": false
+                    },
+                    {
+                      "id": 3,
+                      "title": "Publish on Inndie Hackers",
+                      "isCompleted": false
+                    },
+                    {
+                      "id": 4,
+                      "title": "Publish on Medium",
+                      "isCompleted": false
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "name": "Doing",
+              "tasks": [
+                {
+                  "title": "Finishing up my project",
+                  "description": "",
+                  "subtasks": [
+                    {
+                      "title": "Finishing up my project",
+                      "isCompleted": true,
+                      "id": 1
+                    }
+                  ],
+                  "status": "Doing",
+                  "id": 1
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "name": "Done",
+              "tasks": []
+            }
+          ]
+        }
+      }
     },
     {
       "id": 3,
@@ -140,14 +415,14 @@
               "status": "Now",
               "subtasks": [
                 {
-                  "id": 1,
                   "title": "Launch privately to our waitlist",
-                  "isCompleted": false
+                  "isCompleted": true,
+                  "id": 1
                 },
                 {
-                  "id": 2,
                   "title": "Launch publicly on PH, HN, etc.",
-                  "isCompleted": false
+                  "isCompleted": false,
+                  "id": 2
                 }
               ]
             },

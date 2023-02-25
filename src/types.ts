@@ -76,6 +76,7 @@ export type TaskCardProps = {
   totalNumOfSubtasks: number;
   description: string;
   subtasks: Array<{}>;
+  columnId?: number
 };
 
 export type ModalProps = {

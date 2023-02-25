@@ -30,6 +30,7 @@ const Task = ({ currentTab, data, addColumn }: TaskProps) => {
             tasks={item.tasks}
             subtasks={item.tasks.subtasks}
             tasksLength={item.tasks.length}
+            columnId={item.id}
           />
         ))}
         <AddColumnTab addColumn={addColumn} />

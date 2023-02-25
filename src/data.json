@@ -102,7 +102,21 @@
         {
           "id": 2,
           "name": "Doing",
-          "tasks": []
+          "tasks": [
+            {
+              "title": "Finishing up my project",
+              "description": "",
+              "subtasks": [
+                {
+                  "id": 1,
+                  "isCompleted": false,
+                  "title": "Finishing up my project"
+                }
+              ],
+              "status": "Doing",
+              "id": 1
+            }
+          ]
         },
         {
           "id": 3,
@@ -249,7 +263,7 @@
       "id": 13
     },
     {
-      "name": "School",
+      "name": "School Board",
       "columns": [
         {
           "id": 1,
@@ -259,6 +273,16 @@
         {
           "id": 2,
           "name": "Science",
+          "tasks": []
+        },
+        {
+          "id": 3,
+          "name": "Mixture of arts and science",
+          "tasks": []
+        },
+        {
+          "id": 4,
+          "name": "Beans",
           "tasks": []
         }
       ],
@@ -271,14 +295,243 @@
         {
           "id": 1,
           "name": "Todo",
-          "tasks": []
+          "tasks": [
+            {
+              "title": "Watch youtube dance videos",
+              "description": "",
+              "subtasks": [
+                {
+                  "id": 1,
+                  "isCompleted": false,
+                  "title": "Open youtube"
+                },
+                {
+                  "id": 2,
+                  "isCompleted": false,
+                  "title": "Search for the dance video"
+                },
+                {
+                  "id": 3,
+                  "isCompleted": false,
+                  "title": "Practice the dance"
+                }
+              ],
+              "status": "Todo",
+              "id": 1
+            }
+          ]
         },
         {
           "id": 2,
           "name": "Doing",
+          "tasks": [
+            {
+              "title": "Laziness",
+              "description": "",
+              "subtasks": [
+                {
+                  "id": 1,
+                  "isCompleted": false,
+                  "title": "Lazying about"
+                }
+              ],
+              "status": "Doing",
+              "id": 1
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "name": "Done",
           "tasks": []
+        },
+        {
+          "id": 4,
+          "name": "Will not do",
+          "tasks": [
+            {
+              "title": "I will not dance lol",
+              "description": "",
+              "subtasks": [
+                {
+                  "id": 1,
+                  "isCompleted": false,
+                  "title": "No dance"
+                }
+              ],
+              "status": "Will not do",
+              "id": 1
+            }
+          ]
         }
-      ]
+      ],
+      "reqObj": {
+        "id": 15,
+        "name": "Dancing Competition",
+        "columns": [
+          {
+            "id": 1,
+            "name": "Todo",
+            "tasks": [
+              {
+                "title": "Watch youtube dance videos",
+                "description": "",
+                "subtasks": [
+                  {
+                    "id": 1,
+                    "isCompleted": false,
+                    "title": "Open youtube"
+                  },
+                  {
+                    "id": 2,
+                    "isCompleted": false,
+                    "title": "Search for the dance video"
+                  },
+                  {
+                    "id": 3,
+                    "isCompleted": false,
+                    "title": "Practice the dance"
+                  }
+                ],
+                "status": "Todo",
+                "id": 1
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "name": "Doing",
+            "tasks": [
+              {
+                "title": "Laziness",
+                "description": "",
+                "subtasks": [
+                  {
+                    "id": 1,
+                    "isCompleted": false,
+                    "title": "Lazying about"
+                  }
+                ],
+                "status": "Doing",
+                "id": 1
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "name": "Done",
+            "tasks": []
+          }
+        ],
+        "reqObj": {
+          "id": 15,
+          "name": "Dancing Competition",
+          "columns": [
+            {
+              "id": 1,
+              "name": "Todo",
+              "tasks": [
+                {
+                  "title": "Watch youtube dance videos",
+                  "description": "",
+                  "subtasks": [
+                    {
+                      "id": 1,
+                      "isCompleted": false,
+                      "title": "Open youtube"
+                    },
+                    {
+                      "id": 2,
+                      "isCompleted": false,
+                      "title": "Search for the dance video"
+                    },
+                    {
+                      "id": 3,
+                      "isCompleted": false,
+                      "title": "Practice the dance"
+                    }
+                  ],
+                  "status": "Todo",
+                  "id": 1
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "name": "Doing",
+              "tasks": [
+                {
+                  "title": "Laziness",
+                  "description": "",
+                  "subtasks": [
+                    {
+                      "id": 1,
+                      "isCompleted": false,
+                      "title": "Lazying about"
+                    }
+                  ],
+                  "status": "Doing",
+                  "id": 1
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "name": "Done",
+              "tasks": []
+            }
+          ],
+          "reqObj": {
+            "id": 15,
+            "name": "Dancing Competition",
+            "columns": [
+              {
+                "id": 1,
+                "name": "Todo",
+                "tasks": [
+                  {
+                    "title": "Watch youtube Videos on dancing",
+                    "description": "",
+                    "subtasks": [
+                      {
+                        "id": 1,
+                        "isCompleted": false,
+                        "title": "Open youtube"
+                      },
+                      {
+                        "id": 2,
+                        "isCompleted": false,
+                        "title": "Search for dancing"
+                      }
+                    ],
+                    "status": "Todo",
+                    "id": 1
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "name": "Doing",
+                "tasks": [
+                  {
+                    "title": "Feeling lazy",
+                    "description": "",
+                    "subtasks": [
+                      {
+                        "id": 1,
+                        "isCompleted": false,
+                        "title": "Cannot open my laptop at all"
+                      }
+                    ],
+                    "status": "Doing",
+                    "id": 1
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
     },
     {
       "id": 19,
@@ -287,7 +540,15 @@
         {
           "id": 1,
           "name": "Todo",
-          "tasks": []
+          "tasks": [
+            {
+              "id": 1,
+              "title": "Dance in the water",
+              "description": "I am dancing in the water",
+              "status": "Todo",
+              "subtasks": []
+            }
+          ]
         },
         {
           "id": 2,

@@ -19,7 +19,7 @@ const EditBoard = ({
   currentTab,
   addColumn = false,
 }: EditBoardProps) => {
-  const columnsList = useContext(ColumnsContext);
+  const { columnsList, columnListAndIds } = useContext(ColumnsContext);
 
   const currentTabId = useContext(CurrentBoardContext);
 
@@ -88,15 +88,11 @@ const EditBoard = ({
     console.log(backendUrl);
     axios.patch(backendUrl, reqObj).then((res) => {
       if (res.status === 200) {
-        // closeModal();
-        console.log("data");
-        console.log(data);
         const newArr = data.map((board: any) =>
           board.id === currentTabId ? { ...board, ...reqObj } : board
         );
-        console.log("newArr");
-        console.log(newArr);
         setData(newArr);
+        closeModal();
       }
     });
   };
@@ -136,7 +132,17 @@ const EditBoard = ({
       const request = {
         name: inputFields.name,
         columns: inputFields.columns.map((columnArr: any, index: number) => {
-          return { id: index + 1, name: columnArr.column, tasks: [] };
+          return {
+            id: index + 1,
+            name: columnArr.column,
+            tasks: data.find((board: any) => board.id === currentTabId)
+              ?.columns[index]?.tasks
+              ? [
+                  ...data.find((board: any) => board.id === currentTabId)
+                    .columns[index].tasks,
+                ]
+              : [],
+          };
         }),
       };
       console.log(request);

@@ -6,7 +6,7 @@ type DropdownProps = {
   value: any;
   dropdownList?: Array<any>;
   dropdownListObject?: Array<any>;
-  onSelectChange: (item: any) => void;
+  onSelectChange: (id: any, name: string) => void;
   addBorder?: boolean;
   position?: string;
 };
@@ -23,8 +23,8 @@ const Dropdown = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSelect = (item: any) => {
-    setSelected(item);
-    onSelectChange(item);
+    setSelected(item.name);
+    onSelectChange(item.id, item.name);
     setIsOpen(false);
   };
 
@@ -103,7 +103,7 @@ const Dropdown = ({
               className={
                 "dropdown-item cursor-pointer select-none hover:bg-lightPurpleHover "
               }
-              onClick={() => handleSelect(item.id)}
+              onClick={() => handleSelect(item)}
               key={index}
             >
               {item.name}

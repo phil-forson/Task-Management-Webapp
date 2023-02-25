@@ -27,7 +27,7 @@ const EditTask = ({ task, handleCloseModal }: EditTaskProps) => {
   const [titleError, setTitleError] = useState<boolean>(false);
   const [subtaskError, setSubtaskError] = useState<boolean>(false);
 
-  const columnsList = useContext(ColumnsContext);
+  const { columnsList}  = useContext(ColumnsContext);
 
   const deleteSubtaskField = (index: any) => {
     let data = [...inputFields.subtasks];
@@ -105,8 +105,7 @@ const EditTask = ({ task, handleCloseModal }: EditTaskProps) => {
       setSubtaskError(false);
       handleCloseModal();
       console.log(inputFields);
-      console.log(unfilledSubtasks.length !== 0);
-      console.log("no error");
+      
     }
   };
 

@@ -1,5 +1,8 @@
+import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { AllBoardsContext } from "../../../contexts/AllBoardsContext";
 import { ColumnsContext } from "../../../contexts/ColumnsContext";
+import { CurrentBoardContext } from "../../../contexts/CurrentBoardContext";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import { AddTaskProps, IAddTask } from "../../../types";
 import Button from "../../Button/Button";
@@ -9,7 +12,7 @@ import Subfield from "../../Subfield/Subfield";
 import "./AddTask.css";
 
 const AddTask = ({ handleCloseModal }: AddTaskProps) => {
-  const columnsList = useContext(ColumnsContext);
+  const { columnsList, columnListAndIds } = useContext(ColumnsContext);
   const [inputFields, setInputFields] = useState<IAddTask>({
     title: "",
     description: "",
@@ -18,20 +21,25 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
         title: "",
       },
     ],
-    status: columnsList[0],
+    status: columnListAndIds[0].name,
   });
-  const [emptySubtaskIds, setEmptySubtaskIds] = useState<Array<number>>([])
+  const [emptySubtaskIds, setEmptySubtaskIds] = useState<Array<number>>([]);
+  const [currentColumnId, setCurrentColumnId] = useState(
+    columnListAndIds[0].id
+  );
 
+  const { data, setData } = useContext(AllBoardsContext);
+
+  const currentTabId = useContext(CurrentBoardContext);
 
   const [titleError, setTitleError] = useState<boolean>(false);
   const [subtaskError, setSubtaskError] = useState<boolean>(false);
 
-
   const deleteSubtaskField = (index: any) => {
     if (index !== 0) {
-      let data = [...inputFields.subtasks];
-      data.splice(index, 1);
-      setInputFields({ ...inputFields, subtasks: data });
+      let newData = [...inputFields.subtasks];
+      newData.splice(index, 1);
+      setInputFields({ ...inputFields, subtasks: newData });
     }
   };
 
@@ -39,9 +47,9 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
     index: number,
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    let data: Array<any> = [...inputFields.subtasks];
-    data[index][e.target.name] = e.target.value;
-    setInputFields({ ...inputFields, subtasks: data });
+    let newData: Array<any> = [...inputFields.subtasks];
+    newData[index][e.target.name] = e.target.value;
+    setInputFields({ ...inputFields, subtasks: newData });
   };
 
   const handleFormChange = (
@@ -50,16 +58,17 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
       | React.ChangeEvent<HTMLTextAreaElement>
       | React.ChangeEvent<HTMLSelectElement>
   ) => {
-    let data: any = { ...inputFields };
-    data[e.target.name] = e.target.value;
-    setInputFields(data);
+    let newData: any = { ...inputFields };
+    newData[e.target.name] = e.target.value;
+    setInputFields(newData);
   };
 
-  const onSelectChange = (item: any) => {
-    let data: any = {...inputFields}
-    data.status = item
-    setInputFields(data)
-  }
+  const onSelectChange = (id: any, name: string) => {
+    let newData: any = { ...inputFields };
+    setCurrentColumnId(id);
+    newData.status = name;
+    setInputFields(newData);
+  };
 
   const AddSubtaskFields = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -70,16 +79,30 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
     });
   };
 
+  const addTaskToBoard = (reqObj: any) => {
+    const backendUrl = import.meta.env.VITE_REACT_APP_BASE_URL + '/' + currentTabId
+    axios.patch(backendUrl, reqObj).then((res) => {
+      console.log(res)
+      if(res.status === 200){
+        const newArr = data.map((board: any) =>
+          board.id === currentTabId ? { ...board, reqObj } : { ...board }
+          );
+        setData(newArr);
+        handleCloseModal()
+      }
+    })
+  }
+
   const createTask = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setEmptySubtaskIds([])
+    setEmptySubtaskIds([]);
     const unfilledSubtasks = inputFields.subtasks.filter(
       (subtask: any) => subtask.title === ""
     );
 
     for (let i = 0; i < inputFields.subtasks.length; i++) {
       if (inputFields.subtasks[i].title == "") {
-        setEmptySubtaskIds(prevIds => [...prevIds, i])
+        setEmptySubtaskIds((prevIds) => [...prevIds, i]);
       }
     }
     if (!inputFields.title && unfilledSubtasks.length !== 0) {
@@ -101,10 +124,37 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
     } else {
       setTitleError(false);
       setSubtaskError(false);
-      handleCloseModal();
       console.log(inputFields);
-      console.log(unfilledSubtasks.length !== 0);
-      console.log("no error");
+      
+      const boardToPatch = data.find((board: any) => board.id === currentTabId);
+      const currentColumn = boardToPatch.columns.find(
+        (column: any) => column.id === currentColumnId
+      );
+
+      //generate new id
+      const newId =
+      currentColumn.tasks.length > 0
+          ? currentColumn.tasks[currentColumn.tasks.length - 1].id + 1
+          : 1;
+          // console.log(boardToPatch);
+
+      //append task details to original task
+      boardToPatch.columns.find(
+        (column: any) => column.id === currentColumnId
+        ).tasks = [
+          ...boardToPatch.columns.find(
+            (column: any) => column.id === currentColumnId
+            ).tasks,
+            { ...inputFields, id: newId, subtasks: [...inputFields.subtasks.map((subtask: any, index: number) => {
+              return { id: index + 1, isCompleted: false, title: subtask.title}
+            })] },
+          ];
+
+          console.log(boardToPatch)
+
+          
+
+      addTaskToBoard(boardToPatch)
     }
   };
 
@@ -184,7 +234,8 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
             ))}
             {subtaskError && (
               <div className="text-mainRed text-[13px] float-right mb-3 font-jakartaBold">
-                Please fill empty subtask field{emptySubtaskIds.length > 1 && <span>s</span>}
+                Please fill empty subtask field
+                {emptySubtaskIds.length > 1 && <span>s</span>}
               </div>
             )}
           </div>
@@ -219,10 +270,10 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
             ))}
           </select> */}
           <Dropdown
-              value={inputFields.status}
-              dropdownList={columnsList}
-              onSelectChange={onSelectChange}
-            />
+            value={inputFields.status}
+            dropdownListObject={columnListAndIds}
+            onSelectChange={onSelectChange}
+          />
         </div>
 
         <div className="h-[40px] mt-5">

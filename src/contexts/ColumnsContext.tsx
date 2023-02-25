@@ -1,3 +1,3 @@
 import { createContext } from "react";
 
-export const ColumnsContext = createContext<any>([]);
+export const ColumnsContext = createContext<any>({});

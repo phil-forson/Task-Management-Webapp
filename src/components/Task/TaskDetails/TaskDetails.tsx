@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { AllBoardsContext } from "../../../contexts/AllBoardsContext";
 import { ColumnsContext } from "../../../contexts/ColumnsContext";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import Button from "../../Button/Button";
@@ -19,6 +20,9 @@ const TaskDetails = ({
   openEditModal,
   openDeleteModal,
 }: any) => {
+  const { columnListAndIds } = useContext(ColumnsContext);
+  const { data, setData} = useContext(AllBoardsContext)
+
   const [inputFields, setInputFields] = useState({
     subtasks: subtasks.map((task: any) => {
       return {
@@ -26,8 +30,11 @@ const TaskDetails = ({
         isCompleted: task.isCompleted,
       };
     }),
-    status: status,
+    status: columnListAndIds[0].name,
   });
+  const [currentColumnId, setCurrentColumnId] = useState(
+    columnListAndIds[0].id
+  );
 
   const [submenuOpen, setSubmenuOpen] = useState(false);
 
@@ -35,7 +42,7 @@ const TaskDetails = ({
 
   const closeSubmenu = () => setSubmenuOpen(false);
 
-  const columnsList = useContext(ColumnsContext);
+  const { columnsList } = useContext(ColumnsContext);
 
   const onCheckboxChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -46,16 +53,18 @@ const TaskDetails = ({
     setInputFields(data);
   };
 
-  const onSelectChange = (option: any) => {
+  const onSelectChange = (id: any, name: string) => {
     const data = { ...inputFields };
-    data.status = option;
+    setCurrentColumnId(id);
+    data.status = name;
     setInputFields(data);
   };
 
   const saveChanges = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log(inputFields);
-    closeModal();
+    // console.log(inputFields);
+    
+    // closeModal();
   };
 
   const editTask = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -79,8 +88,8 @@ const TaskDetails = ({
   const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
-    console.log(inputFields)
-  }, [])
+    console.log(inputFields);
+  }, []);
 
   return (
     <>
@@ -150,7 +159,7 @@ const TaskDetails = ({
           <div className="w-full mt-3 text-[13px] ">
             <Dropdown
               value={inputFields.status}
-              dropdownList={columnsList}
+              dropdownListObject={columnListAndIds}
               onSelectChange={onSelectChange}
             />
           </div>

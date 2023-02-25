@@ -14,7 +14,8 @@ import { AllBoardsContext } from "./contexts/AllBoardsContext";
 function App() {
   const [showSidebar, setShowSidebar] = useState<boolean>(true);
   const [currentTabId, setCurrentTabId] = useState<number>(0);
-  const [columnList, setColumnList] = useState<Array<any>>([]);
+  const [columnsList, setColumnsList] = useState<Array<any>>([]);
+  const [columnListAndIds, setColumnListAndIds] = useState<Array<any>>([]);
   const [boardsList, setBoardsList] = useState<Array<any>>([]);
   const [theme, setTheme] = useState(localStorage.getItem("theme"));
   const [boardModalOpen, setBoardModalOpen] = useState(false);
@@ -38,10 +39,13 @@ function App() {
   const findColumns = () => {
     const board = findBoard();
     const arr: Array<any> = [];
+    const secArr: Array<any> = [];
     board?.columns.map((column: any) => {
       arr.push(column.name);
+      secArr.push({ id: column.id, name: column.name });
     });
-    setColumnList(arr);
+    setColumnsList(arr);
+    setColumnListAndIds(secArr);
   };
 
   const getBoards = async () => {
@@ -56,7 +60,7 @@ function App() {
         if (res.data.length) {
           const currentBoard = res.data.find((board: any) => board.id === 1);
           console.log(currentBoard);
-          setCurrentTab(currentBoard.name);
+          setCurrentTab(currentBoard?.name);
           console.log("current tab");
           const boardObjList = [];
           for (let i = 0; i < res.data.length; i++) {
@@ -74,23 +78,15 @@ function App() {
   };
 
   useEffect(() => {
-    console.log("data from app.tsx");
-    console.log(data);
     const currentBoard = data.find((board: any) => board.id === currentTabId);
-    console.log("current board from use effect");
-    console.log(currentBoard);
     setCurrentTab(currentBoard?.name);
+    findColumns();
   }, [data]);
 
   useEffect(() => {
-    console.log("tab id ", currentTabId);
     const currentBoard = data.find((board: any) => board.id === currentTabId);
-    console.log("current board from use effect");
-    console.log(currentBoard);
     setCurrentTab(currentBoard?.name);
     findColumns();
-    console.log("finding columns...");
-    console.log(columnList);
   }, [currentTabId]);
 
   useEffect(() => {
@@ -129,7 +125,7 @@ function App() {
 
   return (
     <AllBoardsContext.Provider value={{ data, setData }}>
-      <ColumnsContext.Provider value={columnList}>
+      <ColumnsContext.Provider value={{ columnsList, columnListAndIds }}>
         <ThemeContext.Provider value={themeElements}>
           <CurrentBoardContext.Provider value={currentTabId}>
             <div className=" dark:bg-darkGrey">
@@ -161,7 +157,7 @@ function App() {
                   setShowSidebar={setShowSidebar}
                   currentTab={currentTab}
                   data={data}
-                  columnsList={columnList}
+                  columnsList={columnsList}
                 />
               </div>
               {/* {modalOpen && <Modal handleClose={close} text="Hello world" />} */}

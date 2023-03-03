@@ -7,6 +7,7 @@ export type DeleteProps = {
   deleteText: React.ReactNode;
   handleDelete: (e: React.MouseEvent<HTMLButtonElement>) => void;
   handleCancel: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  isLoading: boolean
 };
 
 const Delete = ({
@@ -14,6 +15,7 @@ const Delete = ({
   deleteText,
   handleDelete,
   handleCancel,
+  isLoading
 }: DeleteProps) => {
   const { theme } = useContext(ThemeContext);
   return (
@@ -32,6 +34,7 @@ const Delete = ({
             primary="#EA5555"
             hoverColor="mainRedHover"
             onClick={(e) => handleDelete(e)}
+            isLoading={isLoading}
           />
         </div>
         <div className="h-[40px] tablet:w-[48%] mobile:w-full ">

@@ -27,6 +27,8 @@ const AddNewBoard = ({ closeModal }: any) => {
   const [nameError, setNameError] = useState<boolean>(false);
   const [columnError, setColumnError] = useState<boolean>(false);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleFormChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -63,8 +65,10 @@ const AddNewBoard = ({ closeModal }: any) => {
   };
 
   const addBoard = (reqObj: any) => {
+    setIsLoading(true);
     const backendUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
     axios.post(backendUrl, reqObj).then((res: any) => {
+      setIsLoading(false);
       console.log(res);
       if (res.status === 201) {
         closeModal();
@@ -197,7 +201,11 @@ const AddNewBoard = ({ closeModal }: any) => {
         </div>
       </div>
       <div className="mt-5 h-[40px]">
-        <Button text="Create New Board" onClick={(e) => createBoard(e)} />
+        <Button
+          text="Create New Board"
+          onClick={(e) => createBoard(e)}
+          isLoading={isLoading}
+        />
       </div>
     </form>
   );

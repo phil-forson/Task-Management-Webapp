@@ -45,6 +45,7 @@ export type ButtonProps = {
   type?: "button" | "submit" | "reset" | undefined;
   hoverColor?: string;
   onlyIcon?: boolean;
+  isLoading?: boolean
 };
 
 export type BoardtabProps = {
@@ -116,7 +117,7 @@ export type CheckboxProps = {
 export interface IAddTask {
   title: string;
   description: string;
-  subtasks: Array<{ title: string }>;
+  subtasks: Array<any>;
   status: string;
 }
 

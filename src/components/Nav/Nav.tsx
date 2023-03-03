@@ -28,6 +28,7 @@ const Nav = ({
   const [editBoardOpen, setEditBoardOpen] = useState(false);
   const [deleteBoardOpen, setDeleteBoardOpen] = useState(false);
   const [sidebarModalOpen, setSidebarModalOpen] = useState(false);
+  const [deleteBoardLoading, setDeleteBoardLoading] = useState(false)
 
   const currentTabId = useContext(CurrentBoardContext);
 
@@ -62,6 +63,7 @@ const Nav = ({
 
   const handleDeleteBoard = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setDeleteBoardLoading(true)
     const backendUrl =
       import.meta.env.VITE_REACT_APP_BASE_URL + "/" + currentTabId;
       const currentBoard = data.find((board: any) => board.id === currentTabId)
@@ -69,6 +71,7 @@ const Nav = ({
     console.log(index)
     console.log(currentTab, "deleted");
     axios.delete(backendUrl).then((res) => {
+      setDeleteBoardLoading(false)
       console.log(res);
       if (res.status === 200) {
         const newArr = data.filter((board: any) => board.id !== currentTabId);
@@ -223,6 +226,7 @@ const Nav = ({
               deleteType="board"
               handleDelete={handleDeleteBoard}
               handleCancel={handleCancelDeleteBoard}
+              isLoading={deleteBoardLoading}
             />
           }
         />

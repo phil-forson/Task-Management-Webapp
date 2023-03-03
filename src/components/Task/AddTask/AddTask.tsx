@@ -27,6 +27,7 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
   const [currentColumnId, setCurrentColumnId] = useState(
     columnListAndIds[0].id
   );
+  const [isLoading, setIsLoading] = useState(false)
 
   const { data, setData } = useContext(AllBoardsContext);
 
@@ -80,18 +81,20 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
   };
 
   const addTaskToBoard = (reqObj: any) => {
-    const backendUrl = import.meta.env.VITE_REACT_APP_BASE_URL + '/' + currentTabId
+    setIsLoading(true)
+    const backendUrl =
+      import.meta.env.VITE_REACT_APP_BASE_URL + "/" + currentTabId;
     axios.patch(backendUrl, reqObj).then((res) => {
-      console.log(res)
-      if(res.status === 200){
+      setIsLoading(false)
+      if (res.status === 200) {
         const newArr = data.map((board: any) =>
           board.id === currentTabId ? { ...board, reqObj } : { ...board }
-          );
+        );
         setData(newArr);
-        handleCloseModal()
+        handleCloseModal();
       }
-    })
-  }
+    });
+  };
 
   const createTask = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -125,7 +128,7 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
       setTitleError(false);
       setSubtaskError(false);
       console.log(inputFields);
-      
+
       const boardToPatch = data.find((board: any) => board.id === currentTabId);
       const currentColumn = boardToPatch.columns.find(
         (column: any) => column.id === currentColumnId
@@ -133,28 +136,36 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
 
       //generate new id
       const newId =
-      currentColumn.tasks.length > 0
+        currentColumn.tasks.length > 0
           ? currentColumn.tasks[currentColumn.tasks.length - 1].id + 1
           : 1;
-          // console.log(boardToPatch);
+      // console.log(boardToPatch);
 
       //append task details to original task
       boardToPatch.columns.find(
         (column: any) => column.id === currentColumnId
-        ).tasks = [
-          ...boardToPatch.columns.find(
-            (column: any) => column.id === currentColumnId
-            ).tasks,
-            { ...inputFields, id: newId, subtasks: [...inputFields.subtasks.map((subtask: any, index: number) => {
-              return { id: index + 1, isCompleted: false, title: subtask.title}
-            })] },
-          ];
+      ).tasks = [
+        ...boardToPatch.columns.find(
+          (column: any) => column.id === currentColumnId
+        ).tasks,
+        {
+          ...inputFields,
+          id: newId,
+          subtasks: [
+            ...inputFields.subtasks.map((subtask: any, index: number) => {
+              return {
+                id: index + 1,
+                isCompleted: false,
+                title: subtask.title,
+              };
+            }),
+          ],
+        },
+      ];
 
-          console.log(boardToPatch)
+      console.log(boardToPatch);
 
-          
-
-      addTaskToBoard(boardToPatch)
+      addTaskToBoard(boardToPatch);
     }
   };
 
@@ -282,6 +293,7 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
             icon={false}
             onClick={(e) => createTask(e)}
             type="submit"
+            isLoading={isLoading}
           />
         </div>
       </form>

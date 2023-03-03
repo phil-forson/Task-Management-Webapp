@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AllBoardsContext } from "../../../contexts/AllBoardsContext";
 import { ColumnsContext } from "../../../contexts/ColumnsContext";
 import { CurrentBoardContext } from "../../../contexts/CurrentBoardContext";
@@ -40,6 +40,9 @@ const TaskDetails = ({
   const [currentColumnId, setCurrentColumnId] = useState(columnId);
 
   const [submenuOpen, setSubmenuOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
+
+  const previousColumnId = useRef(null);
 
   const openSubmenu = () => setSubmenuOpen(true);
 
@@ -47,6 +50,9 @@ const TaskDetails = ({
 
   const { columnsList } = useContext(ColumnsContext);
 
+  useEffect(() => {
+    previousColumnId.current = currentColumnId;
+  }, [currentColumnId]);
   const onCheckboxChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     index: number
@@ -60,74 +66,100 @@ const TaskDetails = ({
     const data = { ...inputFields };
     setCurrentColumnId(id);
     data.status = name;
+    console.log(data);
     setInputFields(data);
   };
 
   const updateBoard = (reqObj: any) => {
+    setIsLoading(true)
     const backendUrl =
       import.meta.env.VITE_REACT_APP_BASE_URL + "/" + currentTabId;
     axios.patch(backendUrl, reqObj).then((res) => {
+      setIsLoading(false)
       if (res.status === 200) {
         const newArr = data.map((board: any) =>
           board.id === currentTabId ? { ...board, ...reqObj } : { ...board }
         );
         setData(newArr);
-        console.log("new arr");
-        console.log(newArr);
-        // closeModal()
+        closeModal();
       }
     });
   };
 
   const saveChanges = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    // console.log(inputFields);
-    console.log(inputFields)
-    const boardToPatch = data.find((board: any) => board.id === currentTabId);
-    // const taskToUpdate = boardToPatch.columns
-    //   .find((column: any) => column.id === currentColumnId)
-    //   .tasks.find((item: any) => item.id === task.id);
-    // if (!taskToUpdate) {
-    //   boardToPatch.columns
-    //     .find((column: any) => column.id === currentColumnId)
-    //     .tasks.push({
-    //       id: 1,
-    //       description: description,
-    //       title: taskTitle,
-    //       status: inputFields.status,
-    //       subtasks: [...inputFields.subtasks],
-    //     });
-    //   boardToPatch.columns.find(
-    //     (column: any) => column.id === currentColumnId
-    //   ).id = currentColumnId;
-    // } else {
-    //   boardToPatch.columns
-    //     .find((column: any) => column.id === currentColumnId)
-    //     .tasks.find((item: any) => item.id === task.id).subtasks = [
-    //     ...inputFields.subtasks,
-    //   ];
-    //   boardToPatch.columns
-    //     .find((column: any) => column.id === currentColumnId)
-    //     .tasks.find((item: any) => item.id === task.id).status =
-    //     inputFields.status;
-    //   boardToPatch.columns.find(
-    //     (column: any) => column.id === currentColumnId
-    //   ).id = currentColumnId;
 
-    // }
+
+    const boardToPatch = data.find((board: any) => board.id === currentTabId);
+
+    boardToPatch.columns
+      .find((column: any) => column.id === columnId)
+      .tasks.find((item: any) => item.id === task.id).subtasks = [
+      ...inputFields.subtasks,
+    ];
+    boardToPatch.columns
+      .find((column: any) => column.id === columnId)
+      .tasks.find((item: any) => item.id === task.id).status =
+      inputFields.status;
+
+    const currentColumn = boardToPatch.columns.find(
+      (column: any) => column.id === columnId
+    );
+
+    const legitTasks = boardToPatch.columns
+      .find((column: any) => column.id === columnId)
+      .tasks.filter((item: any) => item.status === currentColumn.name);
+
+    const changedTaskStatus = boardToPatch.columns
+      .find((column: any) => column.id === columnId)
+      .tasks.filter((item: any) => item.status !== currentColumn.name);
+
+    changedTaskStatus.map((item: any) => {
+      const columnToUpdate = boardToPatch.columns.find(
+        (column: any) => column.name === item.status
+      );
+      console.log(
+        boardToPatch.columns.find((column: any) => column.name === item.status)
+      );
+      if (columnToUpdate) {
+        const newId =
+          boardToPatch.columns.find(
+            (column: any) => column.name === item.status
+          ).tasks.length > 0
+            ? boardToPatch.columns.find(
+                (column: any) => column.name === item.status
+              ).tasks[
+                boardToPatch.columns.find(
+                  (column: any) => column.name === item.status
+                ).tasks.length - 1
+              ].id + 1
+            : 1;
+        item.id = newId;
+
+        boardToPatch.columns.find(
+          (column: any) => column.name === item.status
+        ).tasks = [
+          ...boardToPatch.columns.find(
+            (column: any) => column.name === item.status
+          ).tasks,
+          item,
+        ];
+      }
+    });
+    boardToPatch.columns.find((column: any) => column.id === columnId).tasks = [
+      ...legitTasks,
+    ];
+
+
+    const newArr = data.map((board: any) =>
+          board.id === currentTabId ? { ...board, ...boardToPatch } : { ...board }
+        );
+        setData(newArr);
+
 
     console.log(boardToPatch);
-    // boardToPatch.columns
-    //   .find((column: any) => column.id === currentColumnId)
-    //   .tasks.find((item: any) => item.id === task.id).subtasks = [
-    //   ...inputFields.subtasks,
-    // ];
-    // boardToPatch.columns
-    //   .find((column: any) => column.id === currentColumnId)
-    //   .tasks.find((item: any) => item.id === task.id).status =
-    //   inputFields.status;
-    //   console.log(boardToPatch)
-    // updateBoard(boardToPatch);
+   
+    updateBoard(boardToPatch);
   };
 
   const editTask = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -232,6 +264,7 @@ const TaskDetails = ({
             text="Save Changes"
             icon={false}
             onClick={(e) => saveChanges(e)}
+            isLoading={isLoading}
           />
         </div>
       </div>

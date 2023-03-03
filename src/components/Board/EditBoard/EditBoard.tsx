@@ -6,6 +6,7 @@ import { ColumnsContext } from "../../../contexts/ColumnsContext";
 import { CurrentBoardContext } from "../../../contexts/CurrentBoardContext";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import Button from "../../Button/Button";
+import LightPurpleButton from "../../Button/LightPurpleButton/LightPurpleButton";
 import Subfield from "../../Subfield/Subfield";
 
 export type EditBoardProps = {
@@ -51,6 +52,8 @@ const EditBoard = ({
   const [nameError, setNameError] = useState<boolean>(false);
   const [columnError, setColumnError] = useState<boolean>(false);
 
+  const [isLoading, setIsLoading]= useState(false)
+
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let data: any = { ...inputFields };
     data["name"] = e.target.value;
@@ -83,10 +86,12 @@ const EditBoard = ({
   };
 
   const editBoard = (reqObj: any) => {
+    setIsLoading(true)
     const backendUrl =
       import.meta.env.VITE_REACT_APP_BASE_URL + "/" + currentTabId;
     console.log(backendUrl);
     axios.patch(backendUrl, reqObj).then((res) => {
+      setIsLoading(false)
       if (res.status === 200) {
         const newArr = data.map((board: any) =>
           board.id === currentTabId ? { ...board, ...reqObj } : board
@@ -217,7 +222,7 @@ const EditBoard = ({
           )}
         </div>
         <div className="h-[40px] mt-2">
-          <Button
+          <LightPurpleButton
             onClick={(e) => addSubfield(e)}
             text="Add New Column"
             color="mainPurple"
@@ -231,6 +236,7 @@ const EditBoard = ({
           text="Save Changes"
           icon={false}
           onClick={(e) => saveChanges(e)}
+          isLoading={isLoading}
         />
       </div>
     </form>

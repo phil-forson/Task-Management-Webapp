@@ -22,6 +22,7 @@ const TaskCard = ({
   const [viewTaskDetails, setViewTaskDetails] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [isLoading, setIsLoading]= useState(false)
 
   const openTaskDetails = () => {
     setViewTaskDetails(true);
@@ -44,9 +45,11 @@ const TaskCard = ({
   const closeEditModal = () => setEditModalOpen(false);
 
   const deleteTask = (reqObj: any) => {
+    setIsLoading(true)
     const backendUrl =
       import.meta.env.VITE_REACT_APP_BASE_URL + "/" + currentTabId;
     axios.patch(backendUrl, reqObj).then((res) => {
+      setIsLoading(false)
       if (res.status === 200) {
         const newArr = data.map((board: any) =>
           board.id === currentTabId ? { ...board, ...reqObj } : { ...board }
@@ -121,7 +124,7 @@ const TaskCard = ({
       {editModalOpen && (
         <Modal
           handleClose={closeEditModal}
-          component={<EditTask handleCloseModal={closeEditModal} task={task} />}
+          component={<EditTask handleCloseModal={closeEditModal} task={task} columnId={columnId} />}
         />
       )}
       {deleteModalOpen && (
@@ -133,6 +136,7 @@ const TaskCard = ({
               deleteType="task"
               handleDelete={handleDeleteTask}
               handleCancel={handleCancelDeleteTask}
+              isLoading={isLoading}
             />
           }
         />

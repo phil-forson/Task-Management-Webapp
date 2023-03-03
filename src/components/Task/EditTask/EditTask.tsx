@@ -1,5 +1,8 @@
+import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import { AllBoardsContext } from "../../../contexts/AllBoardsContext";
 import { ColumnsContext } from "../../../contexts/ColumnsContext";
+import { CurrentBoardContext } from "../../../contexts/CurrentBoardContext";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import { IAddTask } from "../../../types";
 import Button from "../../Button/Button";
@@ -9,25 +12,56 @@ import Subfield from "../../Subfield/Subfield";
 export type EditTaskProps = {
   task: any;
   handleCloseModal: () => void;
+  columnId: number;
 };
 
-const EditTask = ({ task, handleCloseModal }: EditTaskProps) => {
+const EditTask = ({ task, handleCloseModal, columnId }: EditTaskProps) => {
+  const { columnListAndIds } = useContext(ColumnsContext);
   useEffect(() => {
     console.log(inputFields);
   }, []);
   const [inputFields, setInputFields] = useState<IAddTask>({
     title: task.title,
     description: task.description,
-    subtasks: task.subtasks,
+    subtasks: task.subtasks.map((subtask: any) => {
+      return {
+        id: subtask.id,
+        title: subtask.title,
+        isCompleted: subtask.isCompleted,
+      };
+    }),
     status: task.status,
   });
+  const [subtaskId, setSubtaskId] = useState(
+    task.subtasks[task.subtasks.length - 1].id
+  );
+
+  useEffect(() => {
+    console.log(
+      task.subtasks.map((subtask: any) => {
+        return {
+          id: subtask.id,
+          title: subtask.title,
+          isCompleted: subtask.isCompleted,
+        };
+      })
+    );
+  }, []);
 
   const [emptySubtaskIds, setEmptySubtaskIds] = useState<Array<number>>([]);
+
+  const [currentColumnId, setCurrentColumnId] = useState(columnId);
 
   const [titleError, setTitleError] = useState<boolean>(false);
   const [subtaskError, setSubtaskError] = useState<boolean>(false);
 
-  const { columnsList}  = useContext(ColumnsContext);
+  const [isLoading, setIsLoading] = useState(false)
+
+  const { data, setData } = useContext(AllBoardsContext);
+
+  const currentTabId = useContext(CurrentBoardContext);
+
+  const { columnsList } = useContext(ColumnsContext);
 
   const deleteSubtaskField = (index: any) => {
     let data = [...inputFields.subtasks];
@@ -41,6 +75,7 @@ const EditTask = ({ task, handleCloseModal }: EditTaskProps) => {
   ) => {
     let data: Array<any> = [...inputFields.subtasks];
     data[index][e.target.name] = e.target.value;
+    console.log(data);
     setInputFields({ ...inputFields, subtasks: data });
   };
 
@@ -55,18 +90,42 @@ const EditTask = ({ task, handleCloseModal }: EditTaskProps) => {
     setInputFields(data);
   };
 
-  const onSelectChange = (item: any) => {
-    let data: any = { ...inputFields };
-    data.status = item;
+  const onSelectChange = (id: any, name: string) => {
+    const data = { ...inputFields };
+    setCurrentColumnId(id);
+    data.status = name;
+    console.log(data);
     setInputFields(data);
   };
 
   const AddSubtaskFields = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    let newField = { title: "" };
+    const newId = inputFields.subtasks[inputFields.subtasks.length - 1].id
+      ? inputFields.subtasks[inputFields.subtasks.length - 1].id + 1
+      : 1;
+    console.log(newId);
+
+    let newField = { id: newId, title: "", isCompleted: false };
     setInputFields({
       ...inputFields,
       subtasks: [...inputFields.subtasks, newField],
+    });
+  };
+
+  const saveEditTask = (reqObj: any) => {
+    setIsLoading(true)
+    const backendUrl =
+      import.meta.env.VITE_REACT_APP_BASE_URL + "/" + currentTabId;
+    axios.patch(backendUrl, reqObj).then((res) => {
+      setIsLoading(false)
+      if (res.status === 200) {
+        console.log(res);
+        const newArr = data.map((board: any) =>
+          board.id === currentTabId ? { ...board, ...reqObj } : { ...board }
+        );
+        setData(newArr);
+        handleCloseModal();
+      }
     });
   };
 
@@ -103,9 +162,83 @@ const EditTask = ({ task, handleCloseModal }: EditTaskProps) => {
     } else {
       setTitleError(false);
       setSubtaskError(false);
-      handleCloseModal();
-      console.log(inputFields);
-      
+      // handleCloseModal();
+      const boardToPatch = data.find((board: any) => board.id === currentTabId);
+
+      boardToPatch.columns
+        .find((column: any) => column.id === currentColumnId)
+        .tasks.find((item: any) => item.id === task.id).title =
+        inputFields.title;
+      boardToPatch.columns
+        .find((column: any) => column.id === currentColumnId)
+        .tasks.find((item: any) => item.id === task.id).description =
+        inputFields.description;
+      boardToPatch.columns
+        .find((column: any) => column.id === currentColumnId)
+        .tasks.find((item: any) => item.id === task.id).status =
+        inputFields.status;
+      boardToPatch.columns
+        .find((column: any) => column.id === currentColumnId)
+        .tasks.find((item: any) => item.id === task.id).subtasks =
+        inputFields.subtasks.map((subtask: any) => {
+          return {
+            id: subtask.id,
+            title: subtask.title,
+            isCompleted: subtask.isCompleted,
+          };
+        });
+      boardToPatch.columns
+        .find((column: any) => column.id === columnId)
+        .tasks.find((item: any) => item.id === task.id).status =
+        inputFields.status;
+
+      const currentCol = boardToPatch.columns.find(
+        (column: any) => column.id === columnId
+      );
+
+      const legitTasks = boardToPatch.columns
+        .find((column: any) => column.id === columnId)
+        .tasks.filter((item: any) => item.status === currentCol.name);
+
+      const changedTaskStatus = boardToPatch.columns
+        .find((column: any) => column.id === columnId)
+        .tasks.filter((item: any) => item.status !== currentCol.name);
+
+      changedTaskStatus.map((item: any) => {
+        const columnToUpdate = boardToPatch.columns.find(
+          (column: any) => column.name === item.status
+        );
+        if (columnToUpdate) {
+          const newId =
+            boardToPatch.columns.find(
+              (column: any) => column.name === item.status
+            ).tasks.length > 0
+              ? boardToPatch.columns.find(
+                  (column: any) => column.name === item.status
+                ).tasks[
+                  boardToPatch.columns.find(
+                    (column: any) => column.name === item.status
+                  ).tasks.length - 1
+                ].id + 1
+              : 1;
+          item.id = newId;
+          console.log("iteming");
+          console.log(item);
+          boardToPatch.columns.find(
+            (column: any) => column.name === item.status
+          ).tasks = [
+            ...boardToPatch.columns.find(
+              (column: any) => column.name === item.status
+            ).tasks,
+            item,
+          ];
+        }
+      });
+      boardToPatch.columns.find((column: any) => column.id === columnId).tasks =
+        [...legitTasks];
+
+        console.log(boardToPatch)
+      // saveEditTask(boardToPatch)
     }
   };
 
@@ -208,21 +341,9 @@ const EditTask = ({ task, handleCloseModal }: EditTaskProps) => {
           >
             Status<sup className="text-mainRed">*</sup>
           </label>
-          {/* <select
-            className="w-full border-[mediumGrey] outline-none dark:bg-darkGrey dark:border-tintedMediumGrey dark:text-white font-jakartaSemi text-[14px] border-[1px] h-[40px] px-2"
-            name="status"
-            value={inputFields.status}
-            onChange={(e) => handleFormChange(e)}
-          >
-            {columnsList.map((column: any) => (
-              <option className="border-none" value={column}>
-                {column}
-              </option>
-            ))}
-          </select> */}
           <Dropdown
             value={inputFields.status}
-            dropdownList={columnsList}
+            dropdownListObject={columnListAndIds}
             onSelectChange={onSelectChange}
           />
         </div>
@@ -233,6 +354,7 @@ const EditTask = ({ task, handleCloseModal }: EditTaskProps) => {
             icon={false}
             onClick={(e) => editTask(e)}
             type="submit"
+            isLoading={isLoading}
           />
         </div>
       </form>

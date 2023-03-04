@@ -166,19 +166,19 @@ const EditTask = ({ task, handleCloseModal, columnId }: EditTaskProps) => {
       const boardToPatch = data.find((board: any) => board.id === currentTabId);
 
       boardToPatch.columns
-        .find((column: any) => column.id === currentColumnId)
+        .find((column: any) => column.id === columnId)
         .tasks.find((item: any) => item.id === task.id).title =
         inputFields.title;
       boardToPatch.columns
-        .find((column: any) => column.id === currentColumnId)
+        .find((column: any) => column.id === columnId)
         .tasks.find((item: any) => item.id === task.id).description =
         inputFields.description;
       boardToPatch.columns
-        .find((column: any) => column.id === currentColumnId)
+        .find((column: any) => column.id === columnId)
         .tasks.find((item: any) => item.id === task.id).status =
         inputFields.status;
       boardToPatch.columns
-        .find((column: any) => column.id === currentColumnId)
+        .find((column: any) => column.id === columnId)
         .tasks.find((item: any) => item.id === task.id).subtasks =
         inputFields.subtasks.map((subtask: any) => {
           return {
@@ -199,10 +199,14 @@ const EditTask = ({ task, handleCloseModal, columnId }: EditTaskProps) => {
       const legitTasks = boardToPatch.columns
         .find((column: any) => column.id === columnId)
         .tasks.filter((item: any) => item.status === currentCol.name);
+        console.log('legit tasks')
+        console.log(legitTasks)
 
       const changedTaskStatus = boardToPatch.columns
         .find((column: any) => column.id === columnId)
         .tasks.filter((item: any) => item.status !== currentCol.name);
+        console.log('changed task status')
+        console.log(changedTaskStatus)
 
       changedTaskStatus.map((item: any) => {
         const columnToUpdate = boardToPatch.columns.find(
@@ -222,8 +226,6 @@ const EditTask = ({ task, handleCloseModal, columnId }: EditTaskProps) => {
                 ].id + 1
               : 1;
           item.id = newId;
-          console.log("iteming");
-          console.log(item);
           boardToPatch.columns.find(
             (column: any) => column.name === item.status
           ).tasks = [
@@ -238,7 +240,7 @@ const EditTask = ({ task, handleCloseModal, columnId }: EditTaskProps) => {
         [...legitTasks];
 
         console.log(boardToPatch)
-      // saveEditTask(boardToPatch)
+      saveEditTask(boardToPatch)
     }
   };
 

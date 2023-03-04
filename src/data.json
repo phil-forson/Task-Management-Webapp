@@ -37,27 +37,80 @@
               ]
             },
             {
-              "title": "Dance to a song",
-              "description": "It's always good to dance to a song",
+              "id": 4,
+              "title": "Plan Product Hunt launch",
+              "description": "",
+              "status": "Todo",
               "subtasks": [
                 {
-                  "title": "Do the banana dance",
+                  "title": "Find hunter",
                   "isCompleted": true,
                   "id": 1
                 },
                 {
-                  "title": "Do the tiktok dances",
+                  "title": "Gather assets",
+                  "isCompleted": true,
+                  "id": 2
+                },
+                {
+                  "title": "Draft product page",
+                  "isCompleted": true,
+                  "id": 3
+                },
+                {
+                  "title": "Notify customers",
+                  "isCompleted": true,
+                  "id": 4
+                },
+                {
+                  "title": "Notify network",
+                  "isCompleted": true,
+                  "id": 5
+                },
+                {
+                  "title": "Launch!",
+                  "isCompleted": true,
+                  "id": 6
+                }
+              ]
+            },
+            {
+              "title": "Finishing up my project",
+              "description": "",
+              "subtasks": [
+                {
+                  "title": "Find hunter",
+                  "isCompleted": true,
+                  "id": 1
+                },
+                {
+                  "title": "Gather assets",
                   "isCompleted": false,
                   "id": 2
                 },
                 {
-                  "title": "Let's add some amapiano dances",
+                  "title": "Draft product page",
                   "isCompleted": true,
                   "id": 3
+                },
+                {
+                  "title": "Notify customers",
+                  "isCompleted": true,
+                  "id": 4
+                },
+                {
+                  "title": "Notify network",
+                  "isCompleted": true,
+                  "id": 5
+                },
+                {
+                  "title": "Launch!",
+                  "isCompleted": false,
+                  "id": 6
                 }
               ],
               "status": "Todo",
-              "id": 4
+              "id": 5
             }
           ]
         },
@@ -67,7 +120,7 @@
           "tasks": [
             {
               "id": 1,
-              "title": "Plan Product Hunt launch",
+              "title": "Share on Show HN",
               "description": "",
               "status": "Doing",
               "subtasks": [
@@ -108,88 +161,6 @@
         {
           "id": 3,
           "name": "Done",
-          "tasks": [
-            {
-              "title": "Finishing up my project",
-              "description": "",
-              "subtasks": [
-                {
-                  "id": 1,
-                  "title": "Find hunter",
-                  "isCompleted": true
-                },
-                {
-                  "id": 2,
-                  "title": "Gather assets",
-                  "isCompleted": false
-                },
-                {
-                  "id": 3,
-                  "title": "Draft product page",
-                  "isCompleted": true
-                },
-                {
-                  "id": 4,
-                  "title": "Notify customers",
-                  "isCompleted": true
-                },
-                {
-                  "id": 5,
-                  "title": "Notify network",
-                  "isCompleted": true
-                },
-                {
-                  "id": 6,
-                  "title": "Launch!",
-                  "isCompleted": false
-                }
-              ],
-              "status": "Done",
-              "id": 1
-            },
-            {
-              "id": 2,
-              "title": "Share on Show HN",
-              "description": "",
-              "status": "Done",
-              "subtasks": [
-                {
-                  "title": "Find hunter",
-                  "isCompleted": true,
-                  "id": 1
-                },
-                {
-                  "title": "Gather assets",
-                  "isCompleted": true,
-                  "id": 2
-                },
-                {
-                  "title": "Draft product page",
-                  "isCompleted": true,
-                  "id": 3
-                },
-                {
-                  "title": "Notify customers",
-                  "isCompleted": true,
-                  "id": 4
-                },
-                {
-                  "title": "Notify network",
-                  "isCompleted": true,
-                  "id": 5
-                },
-                {
-                  "title": "Launch!",
-                  "isCompleted": true,
-                  "id": 6
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": 4,
-          "name": "Now doing",
           "tasks": []
         }
       ],
@@ -908,13 +879,18 @@
           "name": "Todo",
           "tasks": [
             {
-              "title": "I will dance tomorrow",
+              "title": "Face off",
               "description": "",
               "subtasks": [
                 {
                   "id": 1,
-                  "title": "Shaku shaku",
-                  "isCompleted": false
+                  "isCompleted": false,
+                  "title": "Rap competition"
+                },
+                {
+                  "id": 2,
+                  "isCompleted": false,
+                  "title": "Singing competition"
                 }
               ],
               "status": "Todo",
@@ -946,24 +922,32 @@
           "name": "Done",
           "tasks": [
             {
+              "title": "I have danced",
+              "description": "",
+              "subtasks": [
+                {
+                  "id": 1,
+                  "title": "Shaku shaku",
+                  "isCompleted": true
+                }
+              ],
+              "status": "Done",
+              "id": 2
+            },
+            {
               "title": "I will not dance lol",
               "description": "",
               "subtasks": [
                 {
+                  "id": 1,
                   "title": "No dance",
-                  "isCompleted": false,
-                  "id": 1
+                  "isCompleted": false
                 }
               ],
               "status": "Done",
-              "id": 1
+              "id": 3
             }
           ]
-        },
-        {
-          "id": 4,
-          "name": "Will not do",
-          "tasks": []
         }
       ],
       "reqObj": {

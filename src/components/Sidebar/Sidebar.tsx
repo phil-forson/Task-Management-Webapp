@@ -15,6 +15,7 @@ const Sidebar = ({
   closeBoardModal,
   data,
   setCurrentTabId,
+  isLoadingBoards,
 }: SidebarProps) => {
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("theme") === "dark"
@@ -24,13 +25,9 @@ const Sidebar = ({
 
   const handleSwitchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
-      console.log("setting to dark");
       setTheme("dark");
-      localStorage.setItem("theme", "dark");
     } else {
       setTheme("light");
-      console.log("setting to light");
-      localStorage.setItem("theme", "light");
     }
   };
 
@@ -42,15 +39,49 @@ const Sidebar = ({
             <div className="font-jakartaBold uppercase text-[12px]  ml-8 tracking-widest h-[48px]">
               All boards ( {data.length} )
             </div>
-            {data.map((item: any, index: number) => (
-              <Boardtab
-                id={item.id}
-                name={item.name}
-                key={index}
-                currentTab={currentTab}
-                setCurrentTabId={setCurrentTabId}
-              />
-            ))}
+            {isLoadingBoards ? (
+              <div className="h-[300px] flex justify-center items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  style={{
+                    margin: "auto",
+                    background: "transparent",
+                    display: "block",
+                    shapeRendering: "auto",
+                  }}
+                  width="40px"
+                  height="40px"
+                  viewBox="0 0 100 100"
+                  preserveAspectRatio="xMidYMid"
+                  className=" fill-mainPurple "
+                >
+                  <path
+                    d="M10 50A40 40 0 0 0 90 50A40 42 0 0 1 10 50"
+                    stroke="#635FC7"
+                    strokeWidth={5}
+                  >
+                    <animateTransform
+                      attributeName="transform"
+                      type="rotate"
+                      dur="1s"
+                      repeatCount="indefinite"
+                      keyTimes="0;1"
+                      values="0 50 51;360 50 51"
+                    ></animateTransform>
+                  </path>
+                </svg>
+              </div>
+            ) : (
+              data.map((item: any, index: number) => (
+                <Boardtab
+                  id={item.id}
+                  name={item.name}
+                  key={index}
+                  currentTab={currentTab}
+                  setCurrentTabId={setCurrentTabId}
+                />
+              ))
+            )}
             <div className="h-[48px] mb-12">
               <div className="flex ml-8 items-center h-full">
                 <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">

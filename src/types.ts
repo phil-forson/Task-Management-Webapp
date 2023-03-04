@@ -21,7 +21,9 @@ export type SidebarProps = {
   openBoardModal: () => void;
   closeBoardModal: () => void;
   data: any
-  setCurrentTabId: React.Dispatch<React.SetStateAction<number>>;
+  setCurrentTabId: React.Dispatch<React.SetStateAction<number>>
+  isLoadingBoards: boolean
+
 };
 
 export type BoardProps = {
@@ -30,6 +32,7 @@ export type BoardProps = {
   currentTab: string;
   data: any;
   columnsList: Array<any>;
+  isLoadingBoards: boolean
 };
 
 export type ShowsidebarProps = {

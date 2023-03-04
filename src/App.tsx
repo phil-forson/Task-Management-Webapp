@@ -59,9 +59,7 @@ function App() {
         console.log(currentTabId);
         if (res.data.length) {
           const currentBoard = res.data.find((board: any) => board.id === 1);
-          console.log(currentBoard);
           setCurrentTab(currentBoard?.name);
-          console.log("current tab");
           const boardObjList = [];
           for (let i = 0; i < res.data.length; i++) {
             const key = res.data[i]?.id;
@@ -70,10 +68,12 @@ function App() {
             boardObjList.push(obj);
             setBoardsList(boardObjList);
           }
-          console.log("board obj list");
-          console.log(boardObjList);
         }
       }
+    })
+    .catch((err) => {
+      setIsLoadingBoards(false)
+      console.error(err)
     });
   };
 
@@ -90,23 +90,11 @@ function App() {
   }, [currentTabId]);
 
   useEffect(() => {
-    console.log(data);
-    if (!isLoadingBoards) {
-      console.log("setting current tab id");
-      console.log("there are boards");
-
-      console.log(currentTab);
-    }
-    if (!!localStorage.getItem("theme")) {
-      localStorage.setItem("theme", "light");
-    }
 
     const getData = async () => {
       await getBoards();
     };
     getData();
-    console.log("get theme");
-    console.log(data.length > 0);
   }, []);
 
   useEffect(() => {
@@ -114,7 +102,7 @@ function App() {
   }, [currentTab]);
 
   useEffect(() => {
-    if (localStorage.getItem("theme") == "dark") {
+    if (theme === "dark") {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
@@ -150,6 +138,8 @@ function App() {
                     openBoardModal={openBoardModal}
                     closeBoardModal={closeBoardModal}
                     setCurrentTabId={setCurrentTabId}
+                isLoadingBoards={isLoadingBoards}
+
                   />
                 )}
                 <Board
@@ -158,6 +148,7 @@ function App() {
                   currentTab={currentTab}
                   data={data}
                   columnsList={columnsList}
+                  isLoadingBoards={isLoadingBoards}
                 />
               </div>
               {/* {modalOpen && <Modal handleClose={close} text="Hello world" />} */}

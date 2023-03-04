@@ -126,7 +126,11 @@ const EditTask = ({ task, handleCloseModal, columnId }: EditTaskProps) => {
         setData(newArr);
         handleCloseModal();
       }
-    });
+    })
+    .catch((err) => {
+      setIsLoading(false)
+      alert("Something unexpected happened, try again later")
+    })
   };
 
   const editTask = (e: React.MouseEvent<HTMLButtonElement>) => {

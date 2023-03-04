@@ -99,7 +99,11 @@ const EditBoard = ({
         setData(newArr);
         closeModal();
       }
-    });
+    })
+    .catch((err) => {
+      setIsLoading(false)
+      alert("Something unexpected happened, try again later")
+    })
   };
 
   const saveChanges = (e: React.MouseEvent<HTMLButtonElement>) => {

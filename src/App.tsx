@@ -74,6 +74,7 @@ function App() {
     .catch((err) => {
       setIsLoadingBoards(false)
       console.error(err)
+      alert("Something unexpected happened, try again later")
     });
   };
 

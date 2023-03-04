@@ -67,15 +67,21 @@ const AddNewBoard = ({ closeModal }: any) => {
   const addBoard = (reqObj: any) => {
     setIsLoading(true);
     const backendUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
-    axios.post(backendUrl, reqObj).then((res: any) => {
-      setIsLoading(false);
-      console.log(res);
-      if (res.status === 201) {
-        closeModal();
-        console.log(data);
-        setData([...data, reqObj]);
-      }
-    });
+    axios
+      .post(backendUrl, reqObj)
+      .then((res: any) => {
+        setIsLoading(false);
+        console.log(res);
+        if (res.status === 201) {
+          closeModal();
+          console.log(data);
+          setData([...data, reqObj]);
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        alert("Something unexpected happened, try again later");
+      });
   };
 
   const createBoard = (e: React.MouseEvent<HTMLButtonElement>) => {

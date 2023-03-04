@@ -93,7 +93,11 @@ const AddTask = ({ handleCloseModal }: AddTaskProps) => {
         setData(newArr);
         handleCloseModal();
       }
-    });
+    })
+    .catch((err) => {
+      setIsLoading(false)
+      alert("Something unexpected happened, try again later")
+    })
   };
 
   const createTask = (e: React.MouseEvent<HTMLButtonElement>) => {

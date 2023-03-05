@@ -17,7 +17,7 @@ function App() {
   const [columnsList, setColumnsList] = useState<Array<any>>([]);
   const [columnListAndIds, setColumnListAndIds] = useState<Array<any>>([]);
   const [boardsList, setBoardsList] = useState<Array<any>>([]);
-  const [theme, setTheme] = useState(localStorage.getItem("theme"));
+  const [theme, setTheme] = useState("light");
   const [boardModalOpen, setBoardModalOpen] = useState(false);
   const [data, setData] = useState<any>([]);
   const [isLoadingBoards, setIsLoadingBoards] = useState(true);

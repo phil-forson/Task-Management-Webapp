@@ -143,7 +143,7 @@ const Nav = ({
                 </g>
               </svg>
             </div>
-            <div className="font-jakartaBold ">Kaban</div>
+            <div className="font-jakartaBold ">Kanban</div>
           </div>
           <div
             className="flex h-full grow items-center justify-between border-b-[1px] dark:border-darkLines dark:text-white overflow-hidden"

@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 import TaskCard from "../TaskCard/TaskCard";
 import "./TaskItem.css";
 
-const TaskItem = ({ name, tasks, tasksLength, columnId }: any) => {
+const TaskItem = ({ name, tasks, tasksLength, columnId, color }: any) => {
   const findCompletedTasks = (task: any) => {
     return task.isCompleted == true;
   };
+
+  useEffect(() => {
+    console.log(color)
+  }, [])
 
   return (
     <div className="child min-w-[280px] min-h-[88px]">
@@ -13,11 +17,7 @@ const TaskItem = ({ name, tasks, tasksLength, columnId }: any) => {
         <div
           className={
             "rounded-full w-[15px] h-[15px] " +
-            (name == "Doing"
-              ? "bg-[#8471F2]"
-              : name == "Done"
-              ? "bg-[#67E2AE]"
-              : "bg-[#49C4E5]")
+            color
           }
         ></div>
         <div className="ml-5 tracking-widest font-jakartaBold text-mediumGrey ">

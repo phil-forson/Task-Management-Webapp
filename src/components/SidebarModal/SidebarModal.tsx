@@ -8,7 +8,7 @@ export type SidebarModalProps = {
   currentTab: string;
   setCurrentTabId: React.Dispatch<React.SetStateAction<number>>;
   openBoardModal: () => void;
-  data: any
+  data: any;
 };
 
 const SidebarModal = ({
@@ -16,26 +16,23 @@ const SidebarModal = ({
   currentTab,
   setCurrentTabId,
   openBoardModal,
-  data
+  data,
 }: SidebarModalProps) => {
-  const { theme,setTheme } = useContext(ThemeContext);
+  const { theme, setTheme } = useContext(ThemeContext);
 
   const [darkMode, setDarkMode] = useState(theme === "dark");
-
 
   const handleSwitchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
       setTheme("dark");
-
     } else {
       setTheme("light");
-
     }
   };
 
   useEffect(() => {
-    console.log(data)
-  }, [])
+    console.log(data);
+  }, []);
 
   return (
     <div className="py-5  bg-white tablet:w-[480px] mobile:w-[264px] h-[auto]  rounded-[6px] dark:bg-darkGrey  text-mediumGrey dark:text-mediumGrey font-jakartaBold ">

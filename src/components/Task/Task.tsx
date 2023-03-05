@@ -9,7 +9,33 @@ import TaskItem from "./TaskItem/TaskItem";
 const Task = ({ currentTab, data, addColumn }: TaskProps) => {
   const [taskObj, setTaskObj] = useState<any>({});
 
+  const [colorList, setColorList] = useState(["yes"]);
+
   const currentTabId = useContext(CurrentBoardContext)
+
+  const headerColors = ["bg-[#8471F2]", "bg-[#67E2AE]","bg-[#49C4E5]"]
+
+  function getColor(column: any, index: number) {
+    const colorIndex = index % headerColors.length;
+    console.log('color index')
+    console.log(colorIndex)
+    return headerColors[colorIndex];
+  }
+
+  function assignColors() {
+    const newColorList = taskObj?.columns?.map((item: any, index: number) => {
+      console.log('yes')
+      return getColor(item, index);
+    });
+    setColorList(newColorList);
+  }
+
+  
+  useEffect(() => {
+    assignColors()
+    console.log('color list')
+    console.log(colorList)
+  }, [currentTab, data])
 
   useEffect(() => {
     setTaskObj(data.find((item: any) => item.id == currentTabId));
@@ -31,6 +57,7 @@ const Task = ({ currentTab, data, addColumn }: TaskProps) => {
             subtasks={item.tasks.subtasks}
             tasksLength={item.tasks.length}
             columnId={item.id}
+            color={colorList ? colorList[i]: []}
           />
         ))}
         <AddColumnTab addColumn={addColumn} />

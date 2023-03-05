@@ -17,11 +17,10 @@ const Sidebar = ({
   setCurrentTabId,
   isLoadingBoards,
 }: SidebarProps) => {
-  const [darkMode, setDarkMode] = useState(
-    localStorage.getItem("theme") === "dark"
-  );
+  const { theme,setTheme } = useContext(ThemeContext);
+  
+  const [darkMode, setDarkMode] = useState( theme === "dark"  );
 
-  const { setTheme } = useContext(ThemeContext);
 
   const handleSwitchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {

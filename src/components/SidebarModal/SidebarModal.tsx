@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import Boardtab from "../Board/BoardTab/Boardtab";
 import Switch from "../Switch/Switch";
@@ -18,29 +18,30 @@ const SidebarModal = ({
   openBoardModal,
   data
 }: SidebarModalProps) => {
-  const [darkMode, setDarkMode] = useState(
-    localStorage.getItem("theme") === "dark"
-  );
+  const { theme,setTheme } = useContext(ThemeContext);
 
-  const { setTheme } = useContext(ThemeContext);
+  const [darkMode, setDarkMode] = useState(theme === "dark");
+
 
   const handleSwitchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
       setTheme("dark");
-      localStorage.setItem("theme", "dark");
-      console.log('setting to dark')
+
     } else {
       setTheme("light");
-      console.log('setting to light')
-      localStorage.setItem("theme", "dark");
+
     }
   };
+
+  useEffect(() => {
+    console.log(data)
+  }, [])
 
   return (
     <div className="py-5  bg-white tablet:w-[480px] mobile:w-[264px] h-[auto]  rounded-[6px] dark:bg-darkGrey  text-mediumGrey dark:text-mediumGrey font-jakartaBold ">
       <div className="border-b-2 border-lightGrey dark:border-darkLines">
         <div className="font-jakartaBold uppercase text-[12px]  ml-5 tracking-widest h-[30px]  ">
-          All boards ( 3 )
+          All boards ( {data.length} )
         </div>
       </div>
       <div className="mr-5 mt-3 pr-2 ">
@@ -51,6 +52,7 @@ const SidebarModal = ({
             id={item.id}
             currentTab={currentTab}
             setCurrentTabId={setCurrentTabId}
+            sliceString={true}
           />
         ))}
         <div className="h-[48px] ">

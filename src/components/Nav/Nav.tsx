@@ -68,25 +68,29 @@ const Nav = ({
       import.meta.env.VITE_REACT_APP_BASE_URL + "/" + currentTabId;
     const currentBoard = data.find((board: any) => board.id === currentTabId);
     const index = data.indexOf(currentBoard);
-    console.log(index);
-    console.log(currentTab, "deleted");
     axios
       .delete(backendUrl)
       .then((res) => {
         setDeleteBoardLoading(false);
+        onCloseDeleteBoard();
         console.log(res);
         if (res.status === 200) {
           const newArr = data.filter((board: any) => board.id !== currentTabId);
           setData(newArr);
           console.log(index - 1);
-          setCurrentTabId(data[index - 1].id);
+          if(index > 0){
+            setCurrentTabId(data[index - 1].id);
+          }
+          else {
+            setCurrentTabId(data[index + 1].id)
+          }
         }
       })
       .catch((err) => {
         setDeleteBoardLoading(false);
         alert("Something unexpected happened, try again later");
       });
-    onCloseDeleteBoard();
+    
   };
 
   const handleCancelDeleteBoard = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -111,7 +115,7 @@ const Nav = ({
 
   useEffect(() => {
     console.log("current tab from nav");
-    console.log(currentTab);
+    console.log(data)
   }, []);
   return (
     <>
@@ -190,7 +194,6 @@ const Nav = ({
                   </g>
                 </svg>
                 {openSubmenu && (
-                  // <div className="relative">
                   <Submenu
                     submenu={[
                       { text: "Edit", onClick: onOpenEditBoard },
@@ -200,7 +203,6 @@ const Nav = ({
                     onMouseLeave={onCloseSubmenu}
                     onMouseEnter={onOpenSubmenu}
                   />
-                  // </div>
                 )}
               </div>
             </div>

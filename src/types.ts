@@ -55,7 +55,8 @@ export type BoardtabProps = {
   name: string;
   currentTab: string;
   setCurrentTabId: React.Dispatch<React.SetStateAction<number>>;
-  id: number
+  id: number;
+  sliceString?: boolean
 };
 
 export type TaskProps = {

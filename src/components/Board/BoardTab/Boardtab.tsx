@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { CurrentBoardContext } from '../../../contexts/CurrentBoardContext'
 import { BoardtabProps } from '../../../types'
 
-const Boardtab = ({name, currentTab, setCurrentTabId, id}: BoardtabProps) => {
+const Boardtab = ({name, currentTab, setCurrentTabId, id, sliceString}: BoardtabProps) => {
 
     const handleActive = () => {
         setCurrentTabId(id)
@@ -20,7 +20,7 @@ const Boardtab = ({name, currentTab, setCurrentTabId, id}: BoardtabProps) => {
           className={id === currentTabId ? "fill-white" : "fill-mediumGrey"}
         />
       </svg>
-      <div className={"ml-5 " + (id == currentTabId ? "text-white" : "")}>{name}</div>
+      <div className={"ml-5 " + (id == currentTabId ? "text-white" : "")}>{sliceString ? name.length < 15 ? name : name.slice(0,14)+ '...': name}</div>
     </div>
   </div>
   )

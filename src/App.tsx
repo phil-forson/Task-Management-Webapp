@@ -51,31 +51,33 @@ function App() {
   const getBoards = async () => {
     const backendUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
     setIsLoadingBoards(true);
-    await axios.get(backendUrl).then((res) => {
-      setIsLoadingBoards(false);
-      if (res.status == 200) {
-        setData(res.data);
-        setCurrentTabId(res.data[0]?.id);
-        console.log(currentTabId);
-        if (res.data.length) {
-          const currentBoard = res.data.find((board: any) => board.id === 1);
-          setCurrentTab(currentBoard?.name);
-          const boardObjList = [];
-          for (let i = 0; i < res.data.length; i++) {
-            const key = res.data[i]?.id;
-            const value = res.data[i]?.name;
-            const obj = { id: key, name: value };
-            boardObjList.push(obj);
-            setBoardsList(boardObjList);
+    await axios
+      .get(backendUrl)
+      .then((res) => {
+        setIsLoadingBoards(false);
+        if (res.status == 200) {
+          setData(res.data);
+          setCurrentTabId(res.data[0]?.id);
+          console.log(currentTabId);
+          if (res.data.length) {
+            const currentBoard = res.data.find((board: any) => board.id === 1);
+            setCurrentTab(currentBoard?.name);
+            const boardObjList = [];
+            for (let i = 0; i < res.data.length; i++) {
+              const key = res.data[i]?.id;
+              const value = res.data[i]?.name;
+              const obj = { id: key, name: value };
+              boardObjList.push(obj);
+              setBoardsList(boardObjList);
+            }
           }
         }
-      }
-    })
-    .catch((err) => {
-      setIsLoadingBoards(false)
-      console.error(err)
-      alert("Something unexpected happened, try again later")
-    });
+      })
+      .catch((err) => {
+        setIsLoadingBoards(false);
+        console.error(err);
+        alert("Something unexpected happened, try again later");
+      });
   };
 
   useEffect(() => {
@@ -91,11 +93,12 @@ function App() {
   }, [currentTabId]);
 
   useEffect(() => {
-
     const getData = async () => {
       await getBoards();
     };
     getData();
+    console.log('here is data')
+    console.log(data)
   }, []);
 
   useEffect(() => {
@@ -139,8 +142,7 @@ function App() {
                     openBoardModal={openBoardModal}
                     closeBoardModal={closeBoardModal}
                     setCurrentTabId={setCurrentTabId}
-                isLoadingBoards={isLoadingBoards}
-
+                    isLoadingBoards={isLoadingBoards}
                   />
                 )}
                 <Board
@@ -152,7 +154,6 @@ function App() {
                   isLoadingBoards={isLoadingBoards}
                 />
               </div>
-              {/* {modalOpen && <Modal handleClose={close} text="Hello world" />} */}
             </div>
           </CurrentBoardContext.Provider>
         </ThemeContext.Provider>

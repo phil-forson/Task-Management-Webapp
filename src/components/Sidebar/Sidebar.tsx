@@ -158,7 +158,7 @@ const Sidebar = ({
       {boardModalOpen && (
         <Modal
           handleClose={closeBoardModal}
-          component={<AddNewBoard closeModal={closeBoardModal} />}
+          component={<AddNewBoard closeModal={closeBoardModal} setCurrentTabId={setCurrentTabId}/>}
         />
       )}
     </>

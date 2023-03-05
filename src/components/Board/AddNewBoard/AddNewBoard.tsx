@@ -7,7 +7,7 @@ import Button from "../../Button/Button";
 import LightPurpleButton from "../../Button/LightPurpleButton/LightPurpleButton";
 import Subfield from "../../Subfield/Subfield";
 
-const AddNewBoard = ({ closeModal }: any) => {
+const AddNewBoard = ({ closeModal, setCurrentTabId }: any) => {
   const [inputFields, setInputFields] = useState({
     name: "",
     columns: [
@@ -76,6 +76,7 @@ const AddNewBoard = ({ closeModal }: any) => {
           closeModal();
           console.log(data);
           setData([...data, reqObj]);
+          setCurrentTabId(reqObj.id)
         }
       })
       .catch((err) => {

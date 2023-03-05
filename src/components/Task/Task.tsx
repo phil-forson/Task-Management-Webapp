@@ -9,7 +9,7 @@ import TaskItem from "./TaskItem/TaskItem";
 const Task = ({ currentTab, data, addColumn }: TaskProps) => {
   const [taskObj, setTaskObj] = useState<any>({});
 
-  const [colorList, setColorList] = useState(["yes"]);
+  const [colorList, setColorList] = useState([]);
 
   const currentTabId = useContext(CurrentBoardContext)
 
@@ -23,7 +23,8 @@ const Task = ({ currentTab, data, addColumn }: TaskProps) => {
   }
 
   function assignColors() {
-    const newColorList = taskObj?.columns?.map((item: any, index: number) => {
+    const currentBoard = data.find((item: any) => item.id == currentTabId)
+    const newColorList = currentBoard.columns?.map((item: any, index: number) => {
       console.log('yes')
       return getColor(item, index);
     });

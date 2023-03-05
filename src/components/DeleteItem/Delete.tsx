@@ -1,6 +1,7 @@
 import React, { ReactElement, ReactNode, useContext } from "react";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import Button from "../Button/Button";
+import LightPurpleButton from "../Button/LightPurpleButton/LightPurpleButton";
 
 export type DeleteProps = {
   deleteType: string;
@@ -38,7 +39,7 @@ const Delete = ({
           />
         </div>
         <div className="h-[40px] tablet:w-[48%] mobile:w-full ">
-          <Button
+          <LightPurpleButton
             text="Cancel"
             icon={false}
             primary={theme === "light" ? "#635FC71A" : "white"}

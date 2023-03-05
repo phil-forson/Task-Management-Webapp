@@ -6,6 +6,7 @@ import { CurrentBoardContext } from "../../../contexts/CurrentBoardContext";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import { IAddTask } from "../../../types";
 import Button from "../../Button/Button";
+import LightPurpleButton from "../../Button/LightPurpleButton/LightPurpleButton";
 import Dropdown from "../../Dropdown/Dropdown";
 import Subfield from "../../Subfield/Subfield";
 
@@ -330,7 +331,7 @@ const EditTask = ({ task, handleCloseModal, columnId }: EditTaskProps) => {
             )}
           </div>
           <div className="h-[40px]">
-            <Button
+            <LightPurpleButton
               onClick={(e) => AddSubtaskFields(e)}
               text="Add New Subtask"
               color="mainPurple"

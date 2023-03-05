@@ -8,7 +8,7 @@ const AddColumnTab = ({ addColumn }: any) => {
     <div
       className={
         "child w-[280px] min-h-full flex justify-center items-center font-jakartaBold dark:bg-[rgba(43, 44, 55, 0.25)] text-2xl mt-11 cursor-pointer text-mediumGrey " +
-        (theme === "light" ? "light-column-bg" : "dark-column-bg")
+        (theme === "light" && "light-column-bg")
       }
       onClick={addColumn}
     >

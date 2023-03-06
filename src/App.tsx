@@ -84,6 +84,15 @@ function App() {
     const currentBoard = data.find((board: any) => board.id === currentTabId);
     setCurrentTab(currentBoard?.name);
     findColumns();
+    console.log('data length ', data.length)
+    const boardObjList = [];
+    for (let i = 0; i < data.length; i++) {
+      const key = data[i]?.id;
+      const value = data[i]?.name;
+      const obj = { id: key, name: value };
+      boardObjList.push(obj);
+      setBoardsList(boardObjList);
+    }
   }, [data]);
 
   useEffect(() => {
@@ -97,8 +106,8 @@ function App() {
       await getBoards();
     };
     getData();
-    console.log('here is data')
-    console.log(data)
+    console.log("here is data");
+    console.log(data);
   }, []);
 
   useEffect(() => {

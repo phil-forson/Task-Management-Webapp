@@ -13,7 +13,7 @@ const Task = ({ currentTab, data, addColumn }: TaskProps) => {
 
   const currentTabId = useContext(CurrentBoardContext)
 
-  const headerColors = ["bg-[#8471F2]", "bg-[#67E2AE]","bg-[#49C4E5]"]
+  const headerColors = ["#8471F2", "#67E2AE","#49C4E5"]
 
   function getColor(column: any, index: number) {
     const colorIndex = index % headerColors.length;

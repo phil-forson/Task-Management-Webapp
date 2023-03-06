@@ -16,9 +16,9 @@ const TaskItem = ({ name, tasks, tasksLength, columnId, color }: any) => {
       <div className="flex items-center">
         <div
           className={
-            "rounded-full w-[15px] h-[15px] " +
-            color
+            "rounded-full w-[15px] h-[15px] " 
           }
+          style={{backgroundColor: color}}
         ></div>
         <div className="ml-5 tracking-widest font-jakartaBold text-mediumGrey ">
           {name} ( {tasksLength} )
